@@ -4,7 +4,7 @@ public:
         
         stack<pair<char,int>> st;
         
-        for( int i = 0 ; i < s.length() ; ++i ){
+        for( int i = s.length()-1 ; i >= 0 ; --i ){
             if( st.empty() || st.top().first != s[i] ){
                 st.push({s[i],1});
             }
@@ -26,7 +26,7 @@ public:
             st.pop();
         }
         
-        reverse(ans.begin(),ans.end());
+        // reverse(ans.begin(),ans.end());
         return ans;
         
     }
