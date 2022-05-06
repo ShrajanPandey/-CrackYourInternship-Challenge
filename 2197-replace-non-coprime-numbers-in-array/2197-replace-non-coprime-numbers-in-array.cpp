@@ -1,28 +1,18 @@
 class Solution {
 public:
     vector<int> replaceNonCoprimes(vector<int>& nums) {
-        
-        int i = 0 , n = nums.size();
-        for( int j = 0 ; j < n ; ++j, ++i ){
-            nums[i] = nums[j];
-            if( i > 0 && __gcd(nums[i-1],nums[i]) > 1 ){
-                int gcd = __gcd(nums[i-1],nums[i]);
-                while( i > 0 && gcd > 1 ){
-                    nums[i-1] = ((long long)nums[i]*(long long)nums[i-1])/gcd;
-                    --i;
-                    if( i > 0 ){
-                        gcd = __gcd(nums[i-1],nums[i]);
-                    }
-                }
+        vector<int> result;
+        for(int &i:nums) {
+            result.push_back(i);        // Push the new element in stack.
+            while(result.size()>1&&__gcd(result.back(),result[result.size()-2])>1) {    // While we have two elements and they are not co-prime.
+                long long a=result.back(),b=result[result.size()-2],g=__gcd(a,b);  // Get the last two numbers in the stack and their GCD.
+                
+                // Remove the two elements.
+                result.pop_back();      
+                result.pop_back();
+                result.push_back(a*b/g); // Push the LCM of the two numbers, replacing them.
             }
         }
-        
-        vector<int> ans;
-        for( int j = 0 ; j < i ; ++j ){
-            ans.push_back(nums[j]);
-        }
-        
-        return ans;
-        
+        return result;
     }
 };
