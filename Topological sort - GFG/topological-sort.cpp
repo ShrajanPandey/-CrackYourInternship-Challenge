@@ -10,12 +10,15 @@ class Solution
 	      
 	     vector<int> ans;  
 	    queue<int> readyJobs;
+	    
+	    //inserting 9 indegree vertices as they are not dependent on anything
 	    for( int i = 0 ; i < V ; ++i ){
 	        if( indegree[i] == 0 ){
 	            readyJobs.push(i);
 	        }
 	    }
 	    
+	    //bfs
 	    while( readyJobs.empty() != 1 ){
 	        int cur = readyJobs.front();
 	        readyJobs.pop();
