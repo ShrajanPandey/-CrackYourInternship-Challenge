@@ -2,26 +2,31 @@ class Solution {
 public: 
     string decode( string &s , int &i ){
        
+        int n = 0;
         string ans;
-        while( i < s.length() && s[i] != ']' ){
+        while( i < s.length() ){
             
-            if( isdigit(s[i]) == 0 ){
-                ans += s[i++];
+            if( isdigit(s[i]) ){
+                n = n*10 + (s[i]-'0');
+                ++i;
             }
-            else{
-                int n = 0;
-                while( isdigit(s[i]) && i < s.length() ){
-                    n = n*10 + (s[i]-'0');
-                    ++i;
-                }
-                
-                ++i;//[
+            else if( s[i] == '[' ){
+                    
+                i++;
                 string smallAns = decode(s , i);
-                ++i;//]
-                
                 while( n-- ){
                     ans += smallAns;
                 }
+                n = 0;
+                
+            }
+            else if( s[i] == ']' ){
+                ++i;
+                return ans;
+            }
+            else{
+                ans += s[i];
+                ++i;
             }
             
         }
