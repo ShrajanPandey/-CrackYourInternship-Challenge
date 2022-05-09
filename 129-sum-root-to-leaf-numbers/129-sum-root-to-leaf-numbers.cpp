@@ -15,35 +15,43 @@ public:
         return (root->left == NULL && root->right == NULL );        
     }
     
-    int sum = 0;
+    // int sum = 0;
 
+    int sum(TreeNode* n, int s){
+        if (n == NULL) return 0;
+        if (n->right == NULL && n->left == NULL) return s*10 + n->val;
+        return sum(n->left, s*10 + n->val) + sum(n->right, s*10 + n->val);
+    }
+    
     int sumNumbers(TreeNode* root) {
         
-        queue<pair<TreeNode*,int>> levelOrder;
-        levelOrder.push({root,root->val});
+        return sum(root , 0);
         
-        while( levelOrder.empty() != 1 ){
-            
-            int size = levelOrder.size();
-            for( int i = 0 ; i < size ; ++i ){
-                
-                pair<TreeNode*,int> cur = levelOrder.front();
-                levelOrder.pop();
-                if( cur.first->left ){
-                    levelOrder.push({cur.first->left , cur.second*10 + cur.first->left->val});
-                }
-                if( cur.first->right ){
-                    levelOrder.push({cur.first->right , cur.second*10 + cur.first->right->val});
-                }
-                if( isLeaf(cur.first) ){
-                    sum += cur.second;
-                }
-                
-            }
-            
-        }
+//         queue<pair<TreeNode*,int>> levelOrder;
+//         levelOrder.push({root,root->val});
         
-        return sum;
+//         while( levelOrder.empty() != 1 ){
+            
+//             int size = levelOrder.size();
+//             for( int i = 0 ; i < size ; ++i ){
+                
+//                 pair<TreeNode*,int> cur = levelOrder.front();
+//                 levelOrder.pop();
+//                 if( cur.first->left ){
+//                     levelOrder.push({cur.first->left , cur.second*10 + cur.first->left->val});
+//                 }
+//                 if( cur.first->right ){
+//                     levelOrder.push({cur.first->right , cur.second*10 + cur.first->right->val});
+//                 }
+//                 if( isLeaf(cur.first) ){
+//                     sum += cur.second;
+//                 }
+                
+//             }
+            
+//         }
+        
+//         return sum;
         
     }
 };
