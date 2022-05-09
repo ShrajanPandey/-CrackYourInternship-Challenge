@@ -17,17 +17,7 @@ public:
         vector<long long> dp(s.length()+1,0);
         dp[0] = 1;
         
-        if( s[0] == '*' ){
-            if( zeroIdx.count(1) ){
-                dp[1] = 2;
-            }
-            else{
-                dp[1] = 9;
-            }
-        }
-        else{
-            dp[1] = 1;
-        }
+        dp[1] = (s[0] == '*' ? (zeroIdx.count(1) ? 2 : 9) : 1 );
         
         for( int i = 2 ; i <= s.length() ; ++i ){
 
