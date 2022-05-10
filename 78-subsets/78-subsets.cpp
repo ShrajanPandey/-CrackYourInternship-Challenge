@@ -2,20 +2,20 @@ class Solution {
 public:
     vector<vector<int>> ans;
     void generate(int si , vector<int> &nums , vector<int> subset){
-        if( si == nums.size() ){
-            ans.push_back(subset);
-            return;
-        }
+
+        ans.push_back(subset);
         
-        generate(si+1 , nums , subset);
-        subset.push_back(nums[si]);
-        generate(si+1 , nums , subset);
+        for( int i = si ; i < nums.size() ; ++i ){
+            subset.push_back(nums[i]);
+            generate(i+1 , nums , subset);
+            subset.pop_back();
+        }
 
     }
     
     vector<vector<int>> subsets(vector<int>& nums) {
         vector<int> output;
-        // set<vector<int>> s;
+        // sort(nums.begin(),nums.end());
         generate(0 , nums , output);
         return ans;
     }
