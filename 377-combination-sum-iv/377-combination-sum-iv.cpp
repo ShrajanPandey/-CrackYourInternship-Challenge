@@ -26,7 +26,7 @@ public:
     
     int combinationSum4(vector<int>& nums, int target ) {
         
-        unsigned int dp[target+1];
+        int dp[target+1];
         memset(dp,0,sizeof(dp));
         dp[0] = 1;
         
@@ -37,6 +37,10 @@ public:
                 if( nums[j] > i ){
                     break;
                 }
+                if( (long)dp[i] + dp[i-nums[j]] > INT_MAX ){
+                    continue;
+                }
+                
                 dp[i] += dp[i-nums[j]];
             }
         }
