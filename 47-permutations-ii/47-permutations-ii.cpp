@@ -3,7 +3,7 @@ public:
     vector<vector<int>> ans;
     vector<int> p;
     
-    void permute(vector<int> nums , int si ){
+    void permute(vector<int> &nums , int si ){
         
         if( si >= nums.size() ){
             ans.push_back(nums);
@@ -19,7 +19,9 @@ public:
             // swap(nums[si], nums[i]);
         }
          
-        return;
+        for( int j = nums.size()-1 ; j > si ; --j ){
+            swap(nums[j],nums[si]);
+        }
         
     }
     
