@@ -1,40 +1,35 @@
 class Solution {
 public:
     vector<vector<int>> ans;
-    set<vector<int>> s;
     vector<int> p;
-    map<int,int> m;
     
-    vector<vector<int>> permute(vector<int> &nums , vector<bool> &used ){
+    void permute(vector<int> nums , int si ){
         
-        if( p.size() == nums.size() ){
-            ans.push_back(p);
-            return ans;
+        if( si >= nums.size() ){
+            ans.push_back(nums);
+            return ;
         }
         
-        for( int i = 0 ; i < nums.size() ; ++i ){
-            if( i > 0 && nums[i] == nums[i-1] && used[i-1] == 0 ){
+        for(int i = si ; i < nums.size() ; ++i ){
+            if( i != si && nums[si] == nums[i] ){
                 continue;
             }
-            if( used[i] == 0 ){
-                p.push_back(nums[i]);
-                used[i] = 1;
-                permute(nums , used);
-                used[i] = 0;
-                p.pop_back();
-            }
+            swap(nums[i],nums[si]);
+            permute(nums , si+1);
+            // swap(nums[si], nums[i]);
         }
-        
-        return ans;    
+         
+        return;
         
     }
     
     vector<vector<int>> permuteUnique(vector<int>& nums ) {
     
-        vector<bool> used(nums.size(),0);
+        // vector<bool> used(nums.size(),0);
         
         sort(nums.begin(),nums.end());
-        return permute(nums, used);
+        permute(nums, 0);
+        return ans;
         
     }
 };
