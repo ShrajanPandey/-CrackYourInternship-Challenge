@@ -13,44 +13,62 @@ class Solution {
 public:
     vector<vector<int>> zigzagLevelOrder(TreeNode* root) {
         
-        queue<TreeNode*> levelOrder;
-        levelOrder.push(root);
         vector<vector<int>> ans;
-        int h = 1;
         
         if( root == NULL ){
             return ans;
         }
         
-        while( levelOrder.empty() != 1 ){
+        stack<TreeNode *> LtoR,RtoL;
+        LtoR.push(root);
+        
+        bool ltor = 1;
+        while( LtoR.size() != 0 || RtoL.size() != 0 ){
             
-            vector<int> level;
-            int curLevel = levelOrder.size();
+            vector<int> curLevel;
             
-            for( int i = 0 ; i < curLevel ; ++i ){
+            if( ltor ){
                 
-                TreeNode* cur = levelOrder.front();
-                levelOrder.pop();
-                
-                if( cur->left ){
-                    levelOrder.push(cur->left);
+                while( LtoR.size() != 0 ){
+                    
+                    TreeNode *cur = LtoR.top();
+                    LtoR.pop();
+                    
+                    if( cur->left ){
+                        RtoL.push(cur->left);
+                    }
+                    if( cur->right ){
+                        RtoL.push(cur->right);
+                    }
+                    
+                    curLevel.push_back(cur->val);
+                    
                 }
-                if( cur->right ){
-                    levelOrder.push(cur->right);
-                }
+                ltor = 0;
                 
-                level.push_back(cur->val);
-                
-            }
-            
-            if( h&1 ){
-                ans.push_back(level);
             }
             else{
-                reverse(level.begin(),level.end());
-                ans.push_back(level);
+                
+                while( RtoL.size() != 0 ){
+                    
+                    TreeNode *cur = RtoL.top();
+                    RtoL.pop();
+                    
+                    if( cur->right ){
+                        LtoR.push(cur->right);
+                    }
+                    if( cur->left ){
+                        LtoR.push(cur->left);
+                    }
+                    
+                    curLevel.push_back(cur->val);
+                    
+                }
+                ltor = 1;
+                
             }
-            ++h;
+            
+            ans.push_back(curLevel);
             
         }
         
