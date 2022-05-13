@@ -19,60 +19,47 @@ public:
             return ans;
         }
         
-        stack<TreeNode *> LtoR,RtoL;
-        LtoR.push(root);
-        
+        deque <TreeNode *> level;
+        level.push_back(root);
         bool ltor = 1;
-        while( LtoR.size() != 0 || RtoL.size() != 0 ){
+        
+        while( level.size() != 0 ){
             
-            vector<int> curLevel;
+            vector<int> l;
             
-            if( ltor ){
+            int curLevel = level.size();
+            for( int i = 0 ; i < curLevel ; ++i ){
                 
-                while( LtoR.size() != 0 ){
-                    
-                    TreeNode *cur = LtoR.top();
-                    LtoR.pop();
-                    
+                if( ltor ){
+                    TreeNode *cur = level.front();
+                    level.pop_front();
                     if( cur->left ){
-                        RtoL.push(cur->left);
+                        level.push_back(cur->left);
                     }
                     if( cur->right ){
-                        RtoL.push(cur->right);
+                        level.push_back(cur->right);
                     }
-                    
-                    curLevel.push_back(cur->val);
-                    
+                    l.push_back(cur->val);
                 }
-                ltor = 0;
-                
-            }
-            else{
-                
-                while( RtoL.size() != 0 ){
-                    
-                    TreeNode *cur = RtoL.top();
-                    RtoL.pop();
-                    
+                else{
+                    TreeNode *cur = level.back();
+                    level.pop_back();
                     if( cur->right ){
-                        LtoR.push(cur->right);
+                        level.push_front(cur->right);
                     }
                     if( cur->left ){
-                        LtoR.push(cur->left);
+                        level.push_front(cur->left);
                     }
-                    
-                    curLevel.push_back(cur->val);
-                    
+                    l.push_back(cur->val);
                 }
-                ltor = 1;
                 
             }
             
-            ans.push_back(curLevel);
+            ans.push_back(l);
+            ltor = !ltor;
             
         }
         
         return ans;
-        
     }
 };
