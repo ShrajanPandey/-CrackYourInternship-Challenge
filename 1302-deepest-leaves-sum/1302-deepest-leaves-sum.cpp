@@ -19,7 +19,7 @@ public:
         
         while( p.size() ){
             
-            vector<int> q;
+            ans = 0;
             int s = p.size();
             for( int i = 0 ; i < s ; ++i ){
                 TreeNode *c = p.front();
@@ -31,14 +31,12 @@ public:
                     p.push(c->right);
                 }
                 if( c->left == NULL && c->right == NULL ){
-                    q.push_back(c->val);
+                    ans += c->val;
                 }
             }
-            
-            if( p.size() == 0 ){
-                return accumulate(q.begin(),q.end(),0);
-            }
+         
         }
-        return 0;
+        
+        return ans;
     }
 };
