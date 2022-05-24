@@ -3,7 +3,7 @@ public:
     
     int longestValidParentheses(string s) {
         
-        vector<int> v;
+        // vector<int> v;
         
         stack<int> st;
         int ans = 0, c = 0;
