@@ -6,35 +6,38 @@ public:
         // vector<int> v;
         
         stack<int> st;
-        int ans = 0, c = 0;
+        st.push(-1);
+        
+        int ans = 0;
         for( int i = 0; i < s.length() ; ++i ){
             
             if( s[i] == '('){
                 st.push(i);
             }    
             else{
-                if( st.empty() == 0 && s[st.top()] == '(' ){
-                    st.pop();
+                st.pop();
+                if( st.empty() ){
+                    st.push(i);
                 }    
                 else{
-                    st.push(i);
+                    ans = max( ans , i - st.top());
                 }
             }
             
         }
         
-        int pre = s.length();
-        while( st.empty() != 1 ){
+//         int pre = s.length();
+//         while( st.empty() != 1 ){
             
-            ans = max( ans ,pre -(int) st.top()-1 );
-            pre = st.top();
-            // cout << pre << " ";
-            st.pop();
+//             ans = max( ans ,pre -(int) st.top()-1 );
+//             pre = st.top();
+//             // cout << pre << " ";
+//             st.pop();
             
-        }
-        cout << endl;
+//         }
+//         cout << endl;
         
-        ans = max( ans , pre );
+//         ans = max( ans , pre );
         
         return ans;
         
