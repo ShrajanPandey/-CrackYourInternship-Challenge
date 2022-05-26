@@ -1,29 +1,44 @@
 class Solution {
 public:
-    vector<vector<int>> res;
+    vector<vector<int>> ans;
+    int n , m;
     vector<vector<int>> visited;
-    void dfs(vector<vector<int>>& matrix, int x, int y, int pre, int preval){
-        if (x < 0 || x >= matrix.size() || y < 0 || y >= matrix[0].size()  
-                || matrix[x][y] < pre || (visited[x][y] & preval) == preval) 
+    
+    void dfs( vector<vector<int>> &heights , int x , int y , int pre , int val ){
+        
+        if( x < 0 || y < 0 || x >= n || y >= m || heights[x][y] < pre || ( (visited[x][y]&val) == val) ){
             return;
-        visited[x][y] |= preval;
-        if (visited[x][y] == 3) res.push_back({x, y});
-        dfs(matrix, x + 1, y, matrix[x][y], visited[x][y]); dfs(matrix, x - 1, y, matrix[x][y], visited[x][y]);
-        dfs(matrix, x, y + 1, matrix[x][y], visited[x][y]); dfs(matrix, x, y - 1, matrix[x][y], visited[x][y]);
+        }
+        
+        visited[x][y] |= val;
+        
+        if( visited[x][y] == 3 ){
+            ans.push_back({x,y});
+        }
+        
+        dfs( heights , x+1 , y , heights[x][y] , visited[x][y]);
+        dfs( heights , x-1 , y , heights[x][y] , visited[x][y]);
+        dfs( heights , x , y+1 , heights[x][y] , visited[x][y]);
+        dfs( heights , x , y-1 , heights[x][y] , visited[x][y]);
+        
     }
-
-    vector<vector<int>> pacificAtlantic(vector<vector<int>>& matrix) {
-        if (matrix.empty()) return res;
-        int m = matrix.size(), n = matrix[0].size();
-        visited.resize(m, vector<int>(n, 0));
-        for (int i = 0; i < m; i++) {
-            dfs(matrix, i, 0, INT_MIN, 1);
-            dfs(matrix, i, n - 1, INT_MIN, 2);
+    
+    vector<vector<int>> pacificAtlantic(vector<vector<int>>& heights) {
+            
+        n = heights.size() , m = heights[0].size();
+        visited.resize(n, vector<int>(m, 0));
+        
+        for( int i = 0 ; i < n ; ++i ){
+            dfs( heights , i , 0 , INT_MIN , 1);
+            dfs( heights , i , m-1 , INT_MIN , 2);
         }
-        for (int i = 0; i < n; i++) {
-            dfs(matrix, 0, i, INT_MIN, 1);
-            dfs(matrix, m - 1, i, INT_MIN, 2);
+        
+        for( int i = 0 ; i < m ; ++i ){
+            dfs( heights , 0 , i , INT_MIN , 1 );
+            dfs( heights , n-1 , i , INT_MIN , 2 );
         }
-        return res;
+        
+        return ans;
+        
     }
 };
