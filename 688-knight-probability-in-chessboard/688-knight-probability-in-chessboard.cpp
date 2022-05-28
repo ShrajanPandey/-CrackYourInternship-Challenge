@@ -1,36 +1,21 @@
 class Solution {
 public:
     
-    vector<vector<int>> arr = {{-2,-1},{-1,-2},{1,-2},{2,-1},{2,1},{1,2},{-1,2},{-2,1}};
-    
-    double allPossibleMoves( int n , int moves , int row , int col , vector<vector<vector<double>>> &dp){
-        
-        if( row < 0 || col < 0 || row >= n || col >= n ){
-            // ++total;
-            return 0;
-        }    
-        
-        if( moves == 0 ){
-            return 1;
-        }
-        
-        if( dp[row][col][moves] != INT_MAX ){
-            return dp[row][col][moves];
-        }
-        
-        double ans = 0;
-        
-        for( auto x : arr ){
-            ans += 0.125*allPossibleMoves(n , moves-1 , row + x[0], col + x[1], dp);
-        }
-        
-        return dp[row][col][moves] = ans;
+    double find(int N, int K, int r, int c, vector<vector<vector<double>>>& dp)
+    {
+        if(r<0||c<0||r>=N||c>=N) return 0;
+        if(K==0) return 1;
+        if(dp[r][c][K]!=0) return dp[r][c][K];
+        double p = find(N,K-1,r+1,c+2,dp) + find(N,K-1,r-1,c-2,dp) +
+                   find(N,K-1,r+2,c+1,dp) + find(N,K-1,r-2,c-1,dp) +
+                   find(N,K-1,r+1,c-2,dp) + find(N,K-1,r-1,c+2,dp) +
+                   find(N,K-1,r+2,c-1,dp) + find(N,K-1,r-2,c+1,dp);
+        p /= 8;
+        dp[r][c][K] = p;
+        return p;
     }
-    
-    double knightProbability(int n, int k, int row, int column) {
-        
-        vector<vector<vector<double>>> dp( 26 , vector<vector<double>> (26, vector<double> (101 , INT_MAX)));
-        return allPossibleMoves( n , k , row , column , dp);
-        
+    double knightProbability(int N, int K, int r, int c) {
+        vector<vector<vector<double>>> dp(N,vector<vector<double>>(N,vector<double>(K+1))); // [row][col][step]
+        return find(N,K,r,c,dp);
     }
 };
