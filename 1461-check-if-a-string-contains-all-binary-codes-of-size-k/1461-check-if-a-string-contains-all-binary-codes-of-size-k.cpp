@@ -1,19 +1,8 @@
 class Solution {
-public:
-    long long power(int k ){
-        
-        int a = 1;
-        while( k-- ){
-            a *= 2;
-        }
-        
-        return a;
-        
-    }
-    
+public:    
     bool hasAllCodes(string s, int k) {
         
-        set<string> allCodes;
+        unordered_set<string> allCodes;
         
         for( int i = 0 ; i < s.length() ; ++i ){
             
@@ -22,9 +11,8 @@ public:
             }
             
         }
-        
-        // cout << power(k) << endl;
-        if( allCodes.size() == power(k) ){
+
+        if( allCodes.size() == pow(2,k) ){
             return true;
         }
         
