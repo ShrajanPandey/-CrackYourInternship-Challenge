@@ -108,41 +108,49 @@ struct Node{
 };
 */
 
-/*  Function which returns the  root of 
-    the flattened linked list. */
-Node* SortedMerge(Node* a, Node* b)
-{
-    Node* result = NULL;
- 
-    /* Base cases */
-    if (a == NULL)
-        return (b);
-    else if (b == NULL)
-        return (a);
- 
-    /* Pick either a or b, and recur */
-    if (a->data <= b->data) {
-        result = a;
-        result->bottom = SortedMerge(a->bottom, b);
-    }
-    else {
-        result = b;
-        result->bottom = SortedMerge(a, b->bottom);
-    }
-    return (result);
-}
-
 Node *flatten(Node *root)
 {
    if( root == NULL ){
        return root;
    }
    
-   Node *node = flatten(root->next);
+   Node *smallAns = flatten(root->next);
+   Node *ans = new Node(0);
+   Node *tail = ans, *newNode;
    
-   Node *ans = SortedMerge(root , node);
+  
+   while( root && smallAns ){
+    //   cout << smallAns->data << endl;
+       if( root->data <= smallAns->data ){
+           newNode = new Node(root->data);
+           tail->bottom = newNode;
+           tail = newNode;
+           root = root->bottom;
+       }
+       else{
+           newNode = new Node(smallAns->data);
+           tail->bottom = newNode;
+           tail = newNode;
+           smallAns = smallAns->bottom;
+       }
+   }
    
-   return ans;
+   while( root ){
+       newNode = new Node(root->data);
+       tail->bottom = newNode;
+       tail = newNode;
+       root = root->bottom;
+   }
+   
+   while( smallAns ){
+       newNode = new Node(smallAns->data);
+       tail->bottom = newNode;
+       tail = newNode;
+       smallAns = smallAns->bottom;
+   }
+  
+   
+   return ans->bottom;
    
 }
 
