@@ -1,7 +1,8 @@
 class Solution {
 public:
     
-    int ans( string &word1 , string &word2 , int i , int j , vector<vector<int>> &dp){
+    int dp[501][501];
+    int ans( string &word1 , string &word2 , int i , int j){
         
         if( i == word1.length() && j == word2.length() ){
             return 0;
@@ -14,10 +15,10 @@ public:
         if( i < word1.length() && j < word2.length() ){
             
             if( word1[i] != word2[j] ){
-                return dp[i][j] = 1+min(ans(word1 , word2 , i+1 , j, dp ),ans(word1 , word2 , i , j+1,dp ));
+                return dp[i][j] = 1+min(ans(word1 , word2 , i+1 , j ),ans(word1 , word2 , i , j+1 ));
             }
             else{
-                return dp[i][j] = ans(word1 , word2 , i+1 , j+1,dp);
+                return dp[i][j] = ans(word1 , word2 , i+1 , j+1);
             }
             
         }
@@ -32,8 +33,8 @@ public:
     map<pair<int,int>,int> m;
     int minDistance(string &word1 , string &word2, int i = 0 , int j = 0 ){
         
-        vector<vector<int>> dp(word1.length()+1 , vector<int> (word2.length()+1,-1));
-        return ans(word1 , word2 , 0 , 0 , dp);
+        memset(dp , -1 , sizeof(dp));
+        return ans(word1 , word2 , 0 , 0);
         
          if( i == word1.length() && j == word2.length() ){
             return 0;
