@@ -108,6 +108,29 @@ struct Node{
 };
 */
 
+Node *merge(Node *a , Node *b){
+    
+    if( a == NULL ){
+        return b;
+    }
+    if( b == NULL ){
+        return a;
+    }
+    
+    Node *result = NULL;
+    if( a->data <= b->data ){
+        result = a;
+        a->bottom = merge(a->bottom , b);
+    }
+    else{
+        result = b;
+        b->bottom = merge(a , b->bottom);
+    }
+    
+    return result;
+    
+}
+
 Node *flatten(Node *root)
 {
    if( root == NULL ){
@@ -115,33 +138,35 @@ Node *flatten(Node *root)
    }
    
    Node *smallAns = flatten(root->next);
-   Node *ans = new Node(0);
-   Node *tail = ans;
+   return merge(root, smallAns);
+   
+//   Node *ans = new Node(0);
+//   Node *tail = ans;
    
   
-   while( root && smallAns ){
+//   while( root && smallAns ){
     
-       if( root->data <= smallAns->data ){
-           tail->bottom = root;
-           tail = root;
-           root = root->bottom;
-       }
-       else{
-           tail->bottom = smallAns;
-           tail = smallAns;
-           smallAns = smallAns->bottom;
-       }
+//       if( root->data <= smallAns->data ){
+//           tail->bottom = root;
+//           tail = root;
+//           root = root->bottom;
+//       }
+//       else{
+//           tail->bottom = smallAns;
+//           tail = smallAns;
+//           smallAns = smallAns->bottom;
+//       }
        
-   }
+//   }
    
-   if( root ){
-       tail->bottom = root;
-   }
-   if( smallAns ){
-       tail->bottom = smallAns;
-   }
+//   if( root ){
+//       tail->bottom = root;
+//   }
+//   if( smallAns ){
+//       tail->bottom = smallAns;
+//   }
    
-   return ans->bottom;
+//   return ans->bottom;
    
 }
 
