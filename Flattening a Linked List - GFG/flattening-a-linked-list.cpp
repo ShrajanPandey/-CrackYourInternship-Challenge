@@ -108,38 +108,69 @@ struct Node{
 };
 */
 
-Node *merge(Node *a , Node *b){
+// Node *merge(Node *a , Node *b){
     
-    if( a == NULL ){
-        return b;
-    }
-    if( b == NULL ){
-        return a;
-    }
+//     if( a == NULL ){
+//         return b;
+//     }
+//     if( b == NULL ){
+//         return a;
+//     }
     
-    Node *result = NULL;
-    if( a->data <= b->data ){
-        result = a;
-        a->bottom = merge(a->bottom , b);
-    }
-    else{
-        result = b;
-        b->bottom = merge(a , b->bottom);
-    }
+//     Node *result = NULL;
+//     if( a->data <= b->data ){
+//         result = a;
+//         a->bottom = merge(a->bottom , b);
+//     }
+//     else{
+//         result = b;
+//         b->bottom = merge(a , b->bottom);
+//     }
     
-    return result;
+//     return result;
     
-}
+// }
+struct cmp{
+    bool operator()(Node *a , Node *b){
+        return a->data > b->data;
+    }
+};
 
 Node *flatten(Node *root)
 {
-   if( root == NULL ){
-       return root;
-   }
+//   if( root == NULL ){
+//       return root;
+//   }
    
-   Node *smallAns = flatten(root->next);
-   return merge(root, smallAns);
+//   Node *smallAns = flatten(root->next);
+//   return merge(root, smallAns);
    
+   
+    priority_queue<Node*,vector<Node*>,cmp> pq;
+    Node *temp = root;
+    
+    while( temp ){
+        pq.push(temp);
+        temp = temp->next;
+    }
+    
+    Node *ans = new Node(0),*tail = ans;
+    
+    while( pq.empty() != 1 ){
+        
+        auto k = pq.top();
+        pq.pop();
+        
+        tail->bottom = k;
+        tail = k;
+        
+        if( k->bottom ){
+            pq.push(k->bottom);
+        }
+        
+    }
+    
+    return ans->bottom;
 //   Node *ans = new Node(0);
 //   Node *tail = ans;
    
