@@ -1,8 +1,7 @@
 class Solution {
 public:
     
-    int dp[501][501];
-    int ans( string &word1 , string &word2 , int i , int j ){
+    int ans( string &word1 , string &word2 , int i , int j , vector<vector<int>> &dp){
         
         if( i == word1.length() && j == word2.length() ){
             return 0;
@@ -13,12 +12,14 @@ public:
         }
         
         if( i < word1.length() && j < word2.length() ){
+            
             if( word1[i] != word2[j] ){
-                return dp[i][j] = 1+min(ans(word1 , word2 , i+1 , j ),ans(word1 , word2 , i , j+1 ));
+                return dp[i][j] = 1+min(ans(word1 , word2 , i+1 , j, dp ),ans(word1 , word2 , i , j+1,dp ));
             }
             else{
-                return dp[i][j] ==ans(word1 , word2 , i+1 , j+1);
+                return dp[i][j] = ans(word1 , word2 , i+1 , j+1,dp);
             }
+            
         }
         else if( i < word1.length()){
             return dp[i][j] = word1.length()-i;
@@ -30,7 +31,10 @@ public:
     
     map<pair<int,int>,int> m;
     int minDistance(string &word1 , string &word2, int i = 0 , int j = 0 ){
-    
+        
+        vector<vector<int>> dp(word1.length()+1 , vector<int> (word2.length()+1,-1));
+        return ans(word1 , word2 , 0 , 0 , dp);
+        
          if( i == word1.length() && j == word2.length() ){
             return 0;
         }
@@ -57,32 +61,6 @@ public:
         
        
     }
-    
-//     map<pair<int,int>,int> m;
-//     int minDistance(string &word1, string &word2, int s1 = 0 , int s2 = 0 ) {
-        
-//         if( s1 == word1.length() && s2 == word2.length() ){
-//             return 0;
-//         }
-        
-//         if( m.count(make_pair(s1,s2)) ){
-//             return m[make_pair(s1,s2)];
-//         }
-//         if( s1 < word1.length() && s2 < word2.length() ){
-//             if( word1[s1] == word2[s2] ){
-//                 return  m[make_pair(s1,s2)] = minDistance(word1 , word2 , s1+1 , s2+1 );
-//             }
-//             else{
-//                 return  m[make_pair(s1,s2)] = 1+min(minDistance(word1 , word2 , s1+1 , s2) , minDistance(word1 , word2 ,s1 , s2+1));
-//             }
-//         }
-//         else if( s1 < word1.length() ){
-//             return  m[make_pair(s1,s2)] = word1.length()-s1;
-//         }
-        
-//          return  m[make_pair(s1,s2)] = word2.length()-s2;
-    
-//     }
     
     //O(2n)
 //     int minDistance(string word1 , string word2 ){
