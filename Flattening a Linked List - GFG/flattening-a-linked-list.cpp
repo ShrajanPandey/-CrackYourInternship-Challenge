@@ -116,39 +116,30 @@ Node *flatten(Node *root)
    
    Node *smallAns = flatten(root->next);
    Node *ans = new Node(0);
-   Node *tail = ans, *newNode;
+   Node *tail = ans;
    
   
    while( root && smallAns ){
-    //   cout << smallAns->data << endl;
+    
        if( root->data <= smallAns->data ){
-           newNode = new Node(root->data);
-           tail->bottom = newNode;
-           tail = newNode;
+           tail->bottom = root;
+           tail = root;
            root = root->bottom;
        }
        else{
-           newNode = new Node(smallAns->data);
-           tail->bottom = newNode;
-           tail = newNode;
+           tail->bottom = smallAns;
+           tail = smallAns;
            smallAns = smallAns->bottom;
        }
+       
    }
    
-   while( root ){
-       newNode = new Node(root->data);
-       tail->bottom = newNode;
-       tail = newNode;
-       root = root->bottom;
+   if( root ){
+       tail->bottom = root;
    }
-   
-   while( smallAns ){
-       newNode = new Node(smallAns->data);
-       tail->bottom = newNode;
-       tail = newNode;
-       smallAns = smallAns->bottom;
+   if( smallAns ){
+       tail->bottom = smallAns;
    }
-  
    
    return ans->bottom;
    
