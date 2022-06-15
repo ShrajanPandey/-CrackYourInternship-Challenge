@@ -1,6 +1,6 @@
 class Solution {
 public:
-    int memo[501][501];
+    vector<vector<int>> memo;
     int minMoves( string &s , int i , int j ){
     
         if( i >= j ){
@@ -21,7 +21,7 @@ public:
     
     int minInsertions(string s) {
         
-        memset( memo , -1 , sizeof(memo) );
+        memo.resize(s.length()+1 , vector<int> (s.length()+1 , -1));
         return minMoves( s , 0 , s.length()-1);
         
     }
