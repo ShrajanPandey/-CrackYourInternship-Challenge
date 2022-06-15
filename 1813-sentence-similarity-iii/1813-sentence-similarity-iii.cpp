@@ -1,6 +1,6 @@
 class Solution {
 public:
-    void wordFill( string &a , vector<string> &b ){
+    void wordFill( string &a , deque<string> &b ){
         
         string o;
         int n = a.length();
@@ -22,39 +22,28 @@ public:
     bool areSentencesSimilar(string sentence1, string sentence2) {
         
         int n = sentence1.length() , m = sentence2.length();
-        vector<string> a , b;
+        deque<string> a , b;
         
         wordFill(sentence1 , a );
         wordFill(sentence2 , b );
         
-        int equalWords = 0;
-        int i = 0 , j = 0;
-        
-        while( i < a.size() && j < b.size() ){
-            if( a[i] != b[j] ){
-                break;
+        while( a.empty() == 0 && b.empty() == 0 ){
+            
+            if( a.front() == b.front() ){
+                a.pop_front();
+                b.pop_front();
             }
-            ++i;
-            ++j;
-            ++equalWords;
-        }
-        
-        int x = a.size()-1 , y = b.size()-1;
-        
-        while( x >= i && y >= j ){
-            if( a[x] != b[y] ){
-                break;
+            else if( a.back() == b.back() ){
+                a.pop_back();
+                b.pop_back();
             }
-            --x;
-            --y;
-            ++equalWords;
+            else{
+                break;  
+            }
+            
         }
         
-        if( equalWords == a.size() || equalWords == b.size() ){
-            return true;
-        }
-        
-        return false;
+        return ( a.empty() || b.empty() );
         
     }
 };
