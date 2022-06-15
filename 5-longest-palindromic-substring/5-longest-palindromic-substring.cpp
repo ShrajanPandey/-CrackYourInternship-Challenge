@@ -1,6 +1,8 @@
 class Solution {
 public:
+    int maxLength = 0, x = 0;
     int memo[1001][1001];
+    
     bool isPal( string &s , int start , int end ){
         
         if( start >= end ){
@@ -21,28 +23,34 @@ public:
     
     string longestPalindrome(string s) {
         
-        memset(memo , -1 , sizeof(memo));
-        int xIdx = 0 , yIdx = 0, maxLen = 0;
-        
-        for( int i = 0 ; i < s.length() ; ++i ){
-            
-            for(int j = i ; j < s.length() ; ++j ){
-                
-                if( isPal(s , i , j ) ){
-                    
-                    if( j-i+1 > maxLen ){
-                        maxLen = j-i+1;
-                        xIdx = i;
-                        yIdx = j;
-                    }
-                    
-                }
-                
-            }
-            
+        // memset(memo , -1 , sizeof(memo));
+        // int xIdx = 0 , maxLen = 0;
+        if( s.length() < 2 ){
+            return s;
         }
-
-        return s.substr(xIdx , maxLen);
+        
+        for( int i = 0 ; i < s.length()-1 ; ++i ){
+            extendPal(s , i , i );//odd length palindrome
+            extendPal(s , i , i+1);//even length palindrome
+        }
+        
+        
+        return s.substr(x , maxLength);
         
     }
+    
+    void extendPal(string &s , int i , int j ){
+        
+        while( i >= 0 && j < s.length() && s[i] == s[j] ){
+            --i;
+            ++j;
+        }
+        
+        if( j - i - 1 > maxLength ){
+            maxLength = j-i-1;
+            x = i+1;    
+        }
+        
+    }
+    
 };
