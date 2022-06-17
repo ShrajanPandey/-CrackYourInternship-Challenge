@@ -95,7 +95,7 @@ class Solution{
                 return false;
             }
             
-            map<int,int> values;
+            unordered_map<int,int> values;
             for( int i = 0 ; i < size1 ; ++i ){
                 
                 Node *curNode = pendingNodes1.front();
