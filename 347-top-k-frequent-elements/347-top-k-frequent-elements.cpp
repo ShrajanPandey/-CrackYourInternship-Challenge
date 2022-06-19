@@ -4,7 +4,7 @@ public:
     vector<int> topKFrequent(vector<int>& nums, int k) {
         
         vector<int> ans;
-        map<int,int> num;
+        unordered_map<int,int> num;
         
         for( int i = 0 ; i < nums.size() ; ++i ){
             num[nums[i]]++;
