@@ -12,6 +12,10 @@ public:
 
         for( int i = 0 ; i < haystack.length() ; ++i ){
             
+            if( i + needle.length() > haystack.length() ){
+                break;
+            }
+            
             if( haystack[i] == needle[0] ){
                 
                 int j = 0, k = i;
