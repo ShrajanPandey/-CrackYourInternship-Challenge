@@ -1,5 +1,7 @@
 class Solution {
 public:
+    //Space - O(k) ->at max k indices will be stored in queue 
+    //Time - O(n) 
     int longestOnes(vector<int>& nums, int k) {
         
         int ans = 0;
@@ -27,7 +29,6 @@ public:
                 
             }
             
-            // cout << start << " " << end << ' ' << ans << endl;
             ++end;
             
         }
