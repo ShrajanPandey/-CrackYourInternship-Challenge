@@ -28,20 +28,22 @@ public:
         
     }
     
-    TreeNode* pre = NULL;
+    // TreeNode* pre = NULL;
     
     void flatten(TreeNode* root) {
         
-        if( root == NULL ){
-            return;
-        }
+        flatIt(root, NULL);
+//         if( root == NULL ){
+//             return;
+//         }
         
-        flatten(root->right);
-        flatten(root->left);
+//         flatten(root->right);
+//         flatten(root->left);
         
-        root->right = pre;
-        root->left = NULL;
-        pre = root;
+//         root->right = pre;
+//         root->left = NULL;
+//         pre = root;
         
+//         cout << root->val 
     }
 };
