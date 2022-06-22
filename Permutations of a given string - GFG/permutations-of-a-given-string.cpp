@@ -6,24 +6,20 @@ using namespace std;
 class Solution
 {
 	public:
-	    void generateAll(string &s , vector<string> &ans , string cur , vector<int> &used ,set<string> &st){
+	    void generateAll(string &s , vector<string> &ans , int cur , unordered_set<string> &u){
 	        
-	        bool allUsed = 1;
-	       
-	        for( int i = 0 ; i < s.length() ; ++i ){
-	            if( used[i] == 0 ){
-	                used[i] = 1;
-	                generateAll(s , ans , cur + s[i] , used, st);
-	                used[i] = 0;
-	                allUsed = 0;
+	        if( cur >= s.length()-1 ){
+	            if( u.count(s) == 0 ){
+	                ans.push_back(s);
+	                u.insert(s);
 	            }
+	            return;
 	        }
 	        
-	        if( allUsed ){
-	            if( st.count(cur) == 0 ){
-                    st.insert(cur);
-	               ans.push_back(cur);
-	            }
+	        for( int i = cur ; i < s.length() ; ++i ){
+	            swap(s[cur],s[i]);
+	            generateAll(s , ans ,cur+1,u);
+	            swap(s[cur],s[i]);
 	        }
 	        
 	    }
@@ -31,10 +27,9 @@ class Solution
 		vector<string>find_permutation(string S)
 		{
 		    
-		   vector<int> used(S.length(),0);
+		   unordered_set<string> u;
 		   vector<string> ans;
-		   set<string> st;
-		   generateAll(S, ans , "", used,st);
+		   generateAll(S , ans , 0,u);
 		   sort(ans.begin(),ans.end());
 		   return ans;
 		   
