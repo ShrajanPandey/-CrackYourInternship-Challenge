@@ -11,10 +11,11 @@ public:
             return;
         }
 
-        c.push_back(start);
-        allCombinations(start+1 , n , k-1 , ans , c);
-        c.pop_back();
-        allCombinations(start+1 , n , k , ans , c);
+       for( int i = start ; i <= n-k+1 ; ++i ){
+           c.push_back(i);
+           allCombinations(i+1 , n , k-1 , ans , c);
+           c.pop_back();
+       }
         
     }
     
