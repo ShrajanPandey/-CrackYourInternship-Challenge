@@ -6,12 +6,12 @@ public:
         
         for( int i = 0 ; i < n ; ++i ){
             for( int j = 0 ; j < i ; ++j ){
-                swap(matrix[i][j],matrix[j][i]);
+                swap(matrix[i][j],matrix[j][i]);//transpose matrix
             }    
         }
         
         for( int i = 0 ; i < n ; ++i ){
-            reverse(matrix[i].begin(),matrix[i].end());
+            reverse(matrix[i].begin(),matrix[i].end());//reverse each row for the final ans
         }
         
     }
