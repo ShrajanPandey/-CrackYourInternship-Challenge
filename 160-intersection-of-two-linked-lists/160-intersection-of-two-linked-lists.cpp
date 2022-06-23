@@ -18,27 +18,21 @@ public:
     }
     
     ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
-        int a = len(headA);
-        int b = len(headB);
         
-        while( a > b ){
-            headA = headA->next;
-            --a;
+        if( headA == NULL || headB == NULL ){
+            return NULL;
         }
         
-        while( b > a ){
-            headB = headB->next;
-            --b;
+        ListNode *a = headA , *b = headB;
+       
+        while( a != b ){
+            
+            a = ( a == NULL ? headB : a->next );
+            b = ( b == NULL ? headA : b->next );
+            
         }
         
-        while( headA && headB ){
-            if( headA == headB ){
-                return headA;
-            }
-            headA = headA->next;
-            headB = headB->next;
-        }
+        return a;
         
-        return NULL;
     }
 };
