@@ -41,31 +41,29 @@ public:
         ListNode *dummy = new ListNode(0);
         dummy->next = head;
         
-        ListNode *temp = dummy, *preLeft = NULL , *Left = NULL , *Right = NULL , *afterRight = NULL;
+        ListNode *pre = dummy , *cur = dummy;
         
-        int count = 1;
-        while( temp != NULL ){
+        for( int i = 0 ; i < left ; ++i ){
+            ListNode *temp = cur->next;
+            pre = cur;
+            cur = temp;
+        }
+
+        ListNode *leftPre = pre , *start = cur, *nextRight = NULL;
+        pre = NULL;
+        
+        for( int i = 0 ; i < right - left + 1 ; ++i ){
             
-            if( count == left ){
-                preLeft = temp;
-                Left = temp->next;
-            }    
-            if( count == right+1 ){
-                Right = temp;
-                afterRight = temp->next;
-                break;
-            }
-            
-            temp = temp->next;
-            ++count;
+            ListNode *temp = cur->next;
+            cur->next = pre;
+            pre = cur;
+            cur = temp;
             
         }
         
-        Right->next = NULL;
-        reverse(Left);
+        leftPre->next = pre;
+        start->next = cur;
         
-        Left->next = afterRight;
-        preLeft->next = Right;
         
         return dummy->next;
         
