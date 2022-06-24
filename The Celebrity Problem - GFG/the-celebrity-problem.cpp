@@ -13,15 +13,21 @@ class Solution
     //Function to find if there is a celebrity in the party or not.
     int celebrity(vector<vector<int> >& m, int n) 
     {
-        unordered_map<int,int> q;
         int posCeleb = 0, possibleIndx = -1;
         
         for( int i = 0 ; i < n ; ++i ){
             
             int allZero = 1;
             for( int j = 0 ; j < n ; ++j ){
-                if( m[i][j] == 1 ){
-                    q[j]++;
+                if( abs(m[i][j]) == 1 ){
+    
+                    if( abs(m[j][i]) == 1 ){
+                        m[j][i] = -1;
+                    }
+                    else{
+                        m[j][i] = 2;
+                    }
+
                     allZero = 0;
                 }
             }
@@ -35,12 +41,19 @@ class Solution
             }
             
         }
-        
-        if( q[possibleIndx] == n-1 ){
-            return possibleIndx;
+    
+        if( possibleIndx == -1 ) {
+            return -1;
         }
         
-        return -1;
+        for( int i = 0 ; i < n ; ++i ){
+            if( i != possibleIndx && m[possibleIndx][i] == 0 ){
+                return -1;
+            }
+        }
+        
+        
+        return possibleIndx;
         
     }
 };
