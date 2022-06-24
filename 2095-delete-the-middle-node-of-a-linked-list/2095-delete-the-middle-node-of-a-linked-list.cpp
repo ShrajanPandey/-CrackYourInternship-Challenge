@@ -16,7 +16,7 @@ public:
             return NULL;
         }
         
-        ListNode *slow = head , *fast = head->next, *pre = NULL;
+        ListNode *slow = head , *fast = head->next->next, *pre = NULL;
         
         while( fast && fast->next ){
             
@@ -26,12 +26,10 @@ public:
             
         }
         
-        if( fast != NULL ){
-            slow->next = slow->next->next;
-        }
-        else{
-            pre->next = slow->next;
-        }
+        ListNode *slowP = slow->next;
+        slow->next = slow->next->next;
+        slowP->next = NULL;
+        delete slowP;
         
         return head;
         
