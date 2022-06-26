@@ -26,28 +26,27 @@ class Solution{
     //the complete circle without exhausting its petrol in between.
     int tour(petrolPump p[],int n)
     {
-       int tp = 0 , d = 0;
-       for( int i = 0 ; i < n; ++i ){
-           tp += p[i].petrol;
-           d += p[i].distance;
-       }
        
-       if( d > tp ){
-           return -1;
-       }
+       int start = 0 , end = 1;
+       int curPet = 0;
        
-       int sum = 0;
-       vector<int> isP(n , -1);
-       int start = 0;
-       for( int i = 0 ; i < n ; ++i ){
-           sum += p[i].petrol;
-           if( sum < p[i].distance ){
-               sum = 0;
-               start = (i+1)%n;
+       curPet = p[start].petrol-p[start].distance;
+       
+       while( curPet < 0 || start != end ){
+           
+           while( curPet < 0 && start != end ){
+               
+               curPet -= p[start].petrol - p[start].distance;
+               start = (start + 1 )%n;
+               
+               if( start == 0 ){
+                   return -1;
+               }
+               
            }
-           else{
-               sum -= p[i].distance;
-           }
+           
+           curPet += p[end].petrol - p[end].distance;
+           end = (end+1)%n;
        }
        
        return start;
