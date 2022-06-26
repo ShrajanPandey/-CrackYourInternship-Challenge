@@ -1,0 +1,65 @@
+// { Driver Code Starts
+#include <bits/stdc++.h>
+using namespace std;
+
+ // } Driver Code Ends
+class Solution {
+  public:
+    vector<vector<int>> d{{-1,0},{0,-1},{-1,-1},{1,1},{1,-1},{-1,1},{1,0},{0,1}};
+    
+    void dfs( vector<vector<char>> &grid , int i , int j , vector<vector<int>> &visited){
+        
+        if( i < 0 || j < 0 || i >= grid.size() || j >= grid[0].size() || visited[i][j] == 1 || grid[i][j] == '0' ){
+            return;
+        }
+        
+        
+        visited[i][j] = 1;
+        
+        for( auto x : d ){
+            dfs(grid , i+x[0], j+x[1] , visited);
+        }
+        
+    }
+    
+    int numIslands(vector<vector<char>>& grid) {
+        
+        vector<vector<int>> visited(grid.size() , vector<int>(grid[0].size(),0));
+        int ans = 0;
+        
+        for( int i = 0 ; i < grid.size() ; ++i ){
+            
+            for( int j = 0 ; j < grid[i].size() ; ++j ){
+                
+                if( visited[i][j] == 0 && grid[i][j] == '1' ){
+                    dfs( grid, i , j , visited);
+                    ++ans;
+                }
+                
+            }
+        }
+        
+        return ans;
+        
+    }
+};
+
+// { Driver Code Starts.
+int main() {
+    int tc;
+    cin >> tc;
+    while (tc--) {
+        int n, m;
+        cin >> n >> m;
+        vector<vector<char>> grid(n, vector<char>(m, '#'));
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                cin >> grid[i][j];
+            }
+        }
+        Solution obj;
+        int ans = obj.numIslands(grid);
+        cout << ans << '\n';
+    }
+    return 0;
+}  // } Driver Code Ends
