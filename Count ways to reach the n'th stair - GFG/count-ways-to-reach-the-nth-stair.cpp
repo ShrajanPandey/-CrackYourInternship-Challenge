@@ -29,9 +29,23 @@ class Solution
     
     int countWays(int n)
     {
-        memset(arr , -1 , sizeof(arr));
-        return ways(n);
+        // memset(arr , -1 , sizeof(arr));
+        // return ways(n);
+        if( n <= 1 )
+            return 1;
+            
+        int a = 1 , b = 2, temp ;
+        for( int i = 2 ; i < n ; ++i ){
+            temp =(a+b)%mod;
+            a = b;
+            b = temp;
+        }
+        
+        return b;
+        
     }
+    
+    
 };
 
 
