@@ -40,8 +40,7 @@ struct val{
 /*You are required to complete this method*/
 
 void maxLen( struct val p[], int n , int &maxChain , int pre , int len , vector<int> &visited){
-    
-    int mlen = 0;
+
     for( int i = 0 ; i < n ; ++i ){
         
         if( visited[i] == 0 && pre < p[i].first ){
@@ -57,7 +56,7 @@ void maxLen( struct val p[], int n , int &maxChain , int pre , int len , vector<
 }
 
 bool static cmp(struct val a , struct val b ){
-    return a.first < b.first;
+    return a.second < b.second;
 }
 
 int maxChainLen(struct val p[],int n)
