@@ -1,5 +1,5 @@
 # Sum of elements between k1'th and k2'th smallest elements
-## Easy 
+##  Easy 
 <div class="problem-statement">
                 <p></p><p><span style="font-family:arial,helvetica,sans-serif"><span style="font-size:18px">Given an array <strong>A[]</strong>&nbsp;of <strong>N</strong>&nbsp;positive&nbsp;integers and two positive integers <strong>K<sub>1</sub></strong> and <strong>K<sub>2</sub></strong>. Find the sum of all elements between K<sub>1</sub><sup>th</sup> and&nbsp;K<sub>2</sub><sup>th</sup> smallest elements of the array.&nbsp;</span></span><span style="font-size:18px">It may be assumed that (1 &lt;= k1 &lt; k2 &lt;= n).</span></p>
 
