@@ -6,7 +6,7 @@ using namespace std;
 class Solution {
   public:
     
-    void dfs( vector<int> adj[] , int v , int start , vector<int> &ans, vector<int> &visited ){
+    void dfs( vector<int> adj[] ,int start , vector<int> &ans, vector<int> &visited ){
         
         if( visited[start] == 1 ){
             return;
@@ -18,7 +18,7 @@ class Solution {
         auto a = adj[start];
         for(int i = 0 ; i < a.size() ; ++i ){
             if( visited[a[i]] == 0 ){
-                dfs(adj , v , a[i] , ans , visited );    
+                dfs(adj , a[i] , ans , visited );    
             }
             
         }
@@ -29,7 +29,7 @@ class Solution {
         
         vector<int> ans;
         vector<int> visited( V , 0);
-        dfs( adj , V , 0 , ans,visited);
+        dfs( adj ,0 , ans,visited);
         return ans;
         
     }
