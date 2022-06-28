@@ -49,6 +49,7 @@ public:
                 else if( operation == '!' ){
                     ans ^= 1;
                 }
+                
                 toEval.push(( ans == 1 ? 't' : 'f') );
 
             }
