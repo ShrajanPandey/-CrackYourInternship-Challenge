@@ -7,24 +7,28 @@ class Solution{
     public:
     long long sumBetweenTwoKth( long long A[], long long N, long long K1, long long K2)
     {
-        priority_queue<long long,vector<long long> , greater<long long>> pq;
+        priority_queue<long long> pq;
         
         for( int i = 0 ; i < N ; ++i ){
             
             pq.push(A[i]);
+            if( pq.size() >= K2 ){
+                pq.pop();
+            }
             
         }
         
         long long ans = 0;
-        long long i = 1;
+        long long i = K2-1;
         
         while( pq.empty() != 1 ){
             
-            if( i > K1 && i < K2 ){
+            if( i > K1 ){
                 ans += pq.top();
             }
+            // cout << pq.top()<< " ";
             pq.pop();
-            ++i;
+            --i;
             
         }
         
