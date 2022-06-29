@@ -13,8 +13,7 @@ public:
     
         ++no;
         visited[cur] = 1;
-        
-        // cout << cur << " LOL " << bombsInRange[cur].size() << " " << no << endl;
+
         for( auto i = bombsInRange[cur].begin() ; i != bombsInRange[cur].end() ; ++i ){
             
             if( visited[*i] == 0 ){
@@ -33,12 +32,14 @@ public:
         
         for( int i = 0 ; i < n ; ++i ){
             
-            for( int j = 0 ; j < n ; ++j ){
+            for( int j = i+1 ; j < n ; ++j ){
                 
-                if( j != i && isInRange(bombs[i] , bombs[j]) ){
-                    // cout << " OP " << i << " " << j << endl;
+                if( isInRange(bombs[i] , bombs[j]) ){
                     bombsInRange[i].push_back(j);
                 }
+                if( isInRange(bombs[j], bombs[i]) ){
+                    bombsInRange[j].push_back(i);
+                }   
                 
             }
             
@@ -50,7 +51,6 @@ public:
             vector<int> visited(n , 0);
             int noOfBombs = 0;
             dfs(bombsInRange , visited , i , noOfBombs);
-            // cout << noOfBombs << ' ' << i << ' ' << endl;
             ans = max( ans , noOfBombs);
             
         }
