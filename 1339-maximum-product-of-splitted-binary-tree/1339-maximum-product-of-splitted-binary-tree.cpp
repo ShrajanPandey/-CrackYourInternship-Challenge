@@ -13,36 +13,25 @@ class Solution {
 public:
     int mod = 1e9 + 7;
     
-    long long sum(TreeNode *root){
+    long long sum(TreeNode *root, long long &ans, long long target){
         
         if( root == NULL ){
             return 0;
         }
         
-        root->val += sum(root->left) + sum(root->right);
-        return root->val;
+        int smallSum = root->val + sum(root->left, ans , target) + sum(root->right , ans , target);
+        ans = max( smallSum*(target-smallSum) , ans );
         
-    }
-    
-    void maximumProduct( TreeNode *root , long long total , long long &ans  ){
-        
-        if( root == NULL ){
-            return;
-        }
-        
-        ans = max(ans , (root->val*(total-root->val)));
-        
-        maximumProduct( root->left , total , ans );
-        maximumProduct( root->right , total , ans );
+        return smallSum;
         
     }
     
     int maxProduct(TreeNode* root) {
-    
-        long long totalSum = sum(root);
-        long long ans = 0;
         
-        maximumProduct(root , totalSum , ans );
+        long long ans = 0;
+        long long totalSum = sum(root, ans ,0);
+        
+        sum(root , ans , totalSum);
         
         return ans%mod;
         
