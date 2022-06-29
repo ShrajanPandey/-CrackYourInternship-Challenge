@@ -32,8 +32,19 @@ class Solution {
   
     int canReach(int A[], int N ) {
         
-        vector<int> arr(N,-1);
-        return isPos(A , N , 0, arr);
+        int lastReach = 0;
+        for( int i = 0 ; i < N-1 ; ++i ){
+            if( lastReach < i ){
+                return 0;
+            }
+            lastReach = max( lastReach , i+A[i] );
+        }
+        
+        if( lastReach >= N-1 ){
+            return 1;
+        }
+        
+        return 0;
         
     }
 };
