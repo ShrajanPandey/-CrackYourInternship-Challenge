@@ -17,7 +17,7 @@ public:
             
         }
         
-        int time = 0;
+        int time = -1;
         
         while( rottenOranges.empty() != 1 ){
             
@@ -48,8 +48,7 @@ public:
                 }
                 
             }
-            
-            if( rottenOranges.size() )
+
                 ++time;
             
         }
@@ -71,7 +70,7 @@ public:
             }
         }
         
-        return minTime;
+        return minTime == -1 ? 0 : minTime ;
         
     }
 };
