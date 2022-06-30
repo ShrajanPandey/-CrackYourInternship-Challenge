@@ -15,7 +15,8 @@ public:
         for( int i = 0 ; i < points.size() ; ++i ){
             
             int ans = 0;
-            map<long double,int> slopes;
+            unordered_map<long double,int> slopes;
+            
             for( int j = 0 ; j < points.size() ; ++j ){
                 
                 if( i == j ){
@@ -24,9 +25,6 @@ public:
                 
                 long double curSlope = slope(points[i],points[j]);
                 slopes[curSlope]++;
-                // cout << curSlope << ' ' << i << ' ' << j << endl;
-                // slopes[curSlope].insert(points[i]);
-                // slopes[curSlope].insert(points[j]);
                 ans = max( ans , (int)slopes[curSlope]+1 );
                 
             }
