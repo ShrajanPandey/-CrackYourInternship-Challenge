@@ -12,6 +12,9 @@ public:
         
         for( int i = 0 ; i < (int)nums.size()-2 ; ++i ){
             
+            if( nums[i] > 0 ){
+                break;
+            }
             if( i == 0 || ( i > 0 && nums[i] != nums[i-1] ) ){
                 
                 int lo = i+1 , hi = nums.size()-1;
