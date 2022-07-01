@@ -4,13 +4,15 @@ public:
         
         vector<int> v;
         
-        map<int,int> m;
+        // map<int,int> m;
         for( int i = 0 ; i < nums.size() ; ++i ){
-            // cout << nums[i] << ' ' << target-nums[i] << endl;
-            if( m.count(target-nums[i]) ){
-                return {i,m[target-nums[i]]};
-            } 
-            m[nums[i]] = i;
+
+            for( int j = i+1 ; j < nums.size() ; ++j ){
+                if( nums[i] + nums[j] == target ){
+                    return {i,j};
+                }
+            }
+            
         }
         
         return {};
