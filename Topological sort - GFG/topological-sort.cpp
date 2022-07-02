@@ -35,17 +35,48 @@ class Solution
 	    
 	}
 	
-	vector<int> topoSort(int V, vector<int> adj[]) 
-	{
+	void dfs(int v ,  vector<int> adj[] , stack<int> &ans , vector<int> &visited ){
 	    
-	    vector<int> indegree(V,0);
-	    for( int i = 0 ; i < V ; ++i ){
-	        for( int j = 0 ; j < adj[i].size() ; ++j ){
-	            indegree[adj[i][j]]++;
+	    visited[v] = 1;
+	    
+	    for( auto i = adj[v].begin() ; i != adj[v].end() ; ++i ){
+	        if( visited[*i] == 0 ){
+	            dfs(*i, adj , ans , visited);
 	        }
 	    }
 	    
-	    return topoSortAns(V , adj , indegree);
+	    ans.push(v);
+	    
+	}
+	
+
+	vector<int> topoSort(int V, vector<int> adj[]) 
+	{
+	    vector<int> ans;
+	    stack<int> p;
+	    
+	    vector<int> visited(V,0);
+	    for( int i = 0 ; i < V ; ++i ){
+	        if( visited[i] == 0 ){
+	            dfs( i , adj , p , visited);
+	        }
+	    }
+	    
+	    while( p.empty() != 1 ){
+	        ans.push_back(p.top());
+	        p.pop();
+	    }
+	    
+	    return ans;
+	    
+	   // vector<int> indegree(V,0);
+	   // for( int i = 0 ; i < V ; ++i ){
+	   //     for( int j = 0 ; j < adj[i].size() ; ++j ){
+	   //         indegree[adj[i][j]]++;
+	   //     }
+	   // }
+	    
+	   // return topoSortAns(V , adj , indegree);
 	 
 	}
 };
