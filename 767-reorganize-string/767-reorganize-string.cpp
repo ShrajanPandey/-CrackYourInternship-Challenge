@@ -5,55 +5,47 @@ public:
         vector<int> count(26,0);
         
         int maxi = 0;
+        int maxLet = 0;
         for( int i = 0 ; i < s.length() ; ++i ){
             count[s[i]-'a']++;
             maxi = max( maxi , count[s[i]-'a']);
+            if(maxi == count[s[i]-'a']){
+                maxLet = s[i]-'a';
+            }
         }
         
         if( 2*maxi-1 > s.length() ){
             return "";
         }
         
-        
-        string ans;
-        priority_queue<pair<int,char>> pq;
+        vector<char> ans(s.length());
+        int idx = 0;
+        while( count[maxLet] ){
+            ans[idx] = (maxLet + 'a');
+            idx += 2;
+           count[maxLet]--;
+        }
         
         for( int i = 0 ; i < 26 ; ++i ){
-            if( count[i] ){
-                pq.push({count[i],(char)(i+'a')});
-            }
-        }
-        
-        while( pq.empty() != 1 ){
             
-            pair<int,char> a = pq.top();
-            pq.pop();
-            
-            if( pq.empty() ){
-                ans += a.second;
-                break;
-            }
-            
-            while( a.first && pq.empty() != 1 ){
-                pair<int,int> b = pq.top();
-                pq.pop();
-                ans += a.second;
-                ans += b.second;
-                b.first--;
-                a.first--;
-                if( b.first ){
-                    pq.push(b);
+            while( count[i] ){
+                
+                if( idx >= s.length() ){
+                    idx = 1;
                 }
+                ans[idx] = (i+'a');
+                count[i]--;
+                idx += 2;
+                
             }
-            
-            if( pq.empty() && a.first ){
-                ans += a.second;
-            }
-            
         }
-       
         
-        return ans;
+        string p;
+        for( int i = 0 ; i < ans.size() ; ++i ){
+            p += ans[i];
+        }
+        
+        return p;
         
     }
 };
