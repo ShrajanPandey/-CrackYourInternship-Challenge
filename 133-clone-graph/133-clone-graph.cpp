@@ -21,38 +21,7 @@ public:
 
 class Solution {
 public:
-    void dfs( Node *node , map<int,Node*> &clones , unordered_set<int> &visited ){
-        
-        visited.insert(node->val);
-        Node *parent = clones.count(node->val) ? clones[node->val] : new Node(node->val);
-        // cout << node->val << endl;
-        clones[node->val] = parent;
-        
-        for( auto cur : node->neighbors ){
-            
-            bool present = 0;
-            Node *newNode = clones.count(cur->val) ? clones[cur->val] : new Node(cur->val);
-            // cout << cur->val << ' ';
-            clones[cur->val] = newNode;
-            
-            for( int i = 0 ; i < parent->neighbors.size() ; ++i ){
-                if( parent->neighbors[i]->val == cur->val ){
-                    present = 1;
-                    break;
-                }
-            }
-            if( present == 0 ){
-                parent->neighbors.push_back(newNode);
-            }
-            
-            if( visited.count(cur->val) == 0 ){
-                dfs(cur , clones , visited);
-            }
-            
-        }
-        
-        // cout << endl;
-    }
+    unordered_map<Node*,Node*> clones;
     
     Node* cloneGraph(Node* node) {
         
@@ -60,15 +29,14 @@ public:
             return NULL;
         }
         
-        map<int,Node*> clones;   
-        Node *newNode = new Node(node->val);
+        if( clones.count(node) == 0 ){
+            clones[node] = new Node(node->val);
+            for( Node *neighbour : node->neighbors ){
+                clones[node]->neighbors.push_back(cloneGraph(neighbour));
+            }
+        }
         
-        clones[node->val] = newNode;
-        unordered_set<int> visited;
-        
-        dfs(node , clones , visited);
-        
-        return newNode;
+        return clones[node];
         
     }
 };
