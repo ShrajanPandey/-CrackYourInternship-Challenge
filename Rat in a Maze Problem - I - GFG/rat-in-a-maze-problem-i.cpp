@@ -35,13 +35,10 @@ class Solution{
         m[i][j] = 0;
         
         
-        if( isValid(m , i-1 , j ) )
+        if( isValid(m , i-1 , j ))
         path(m , s + 'U' , i-1 , j , ans);
-        if( isValid(m , i+1 , j ) )
         path(m , s + 'D' , i+1 , j , ans);
-        if( isValid( m , i , j-1) )
         path(m , s + 'L' , i , j-1 , ans);
-        if( isValid( m , i , j+1 ) )
         path(m , s + 'R' , i , j+1 , ans);
         
         m[i][j] = 1;
