@@ -1,15 +1,11 @@
 class Solution {
 public:
-    void dfs( unordered_map<int,vector<int>> &adjList , vector<int> &visited , int cur ){
     
-        visited[cur]  = 1;
-        
-        for( auto neighbour : adjList[cur] ){
-            if( visited[neighbour] == 0 ){
-                dfs( adjList , visited , neighbour );
-            }
+    int findParent(vector<int> &parent , int x){
+        if( parent[x] == x ){
+            return x;
         }
-
+        return parent[x] = findParent(parent,parent[x]);
     }
     
     int makeConnected(int n, vector<vector<int>>& connections) {
@@ -18,24 +14,29 @@ public:
             return -1;
         }
         
-        unordered_map<int,vector<int>> adjList;
-        
-        for( int i = 0 ; i < connections.size() ; ++i ){
-            adjList[connections[i][1]].push_back(connections[i][0]);
-            adjList[connections[i][0]].push_back(connections[i][1]);
+        vector<int> parent(n,0);
+        for( int i = 0 ; i < n; ++i ){
+            parent[i] = i;
         }
         
-        vector<int> visited(n ,0);
+        int extraEdge = 0;
+        for( int i = 0 ; i < connections.size() ; ++i ){
+            int pren1 = findParent(parent, connections[i][0]);
+            int pren2 = findParent(parent, connections[i][1]);
+            if( pren1 == pren2 ){
+                ++extraEdge;
+            }
+            else parent[pren1] = pren2;
+        }
+        
         int components = 0;
-     
         for( int i = 0 ; i < n ; ++i ){
-            if( visited[i] == 0 ){
-                dfs( adjList , visited , i );
+            if( parent[i] == i ){
                 ++components;
             }
         }
         
         return components-1;
-            
+        
     }
 };
