@@ -10,13 +10,13 @@ using namespace std;
 
 class Solution{
     public:
-    void path(vector<vector<int>> &m , string s , int i , int j , vector<vector<int>> &visited , vector<string> &ans){
+    void path(vector<vector<int>> &m , string s , int i , int j , vector<string> &ans){
             
         if( i >= m.size() || j >= m[0].size() || i < 0 || j < 0 ){
             return ;
         }
         
-        if( m[i][j] == 0 || visited[i][j] == 1 ) {
+        if( m[i][j] == 0 ) {
             return;
         }
         
@@ -25,14 +25,14 @@ class Solution{
             return;
         }
         
-        visited[i][j] = 1;
+        m[i][j] = 0;
         
-        path(m , s + 'U' , i-1 , j , visited, ans);
-        path(m , s + 'D' , i+1 , j , visited, ans);
-        path(m , s + 'L' , i , j-1 , visited, ans);
-        path(m , s + 'R' , i , j+1 , visited, ans);
+        path(m , s + 'U' , i-1 , j , ans);
+        path(m , s + 'D' , i+1 , j , ans);
+        path(m , s + 'L' , i , j-1 , ans);
+        path(m , s + 'R' , i , j+1 , ans);
         
-        visited[i][j] = 0;
+        m[i][j] = 1;
         
     }
     
@@ -40,7 +40,7 @@ class Solution{
         
         vector<string> ans;
         vector<vector<int>> visited( n+1 , vector<int> ( n+1 , 9));
-        path( m ,"", 0, 0 , visited , ans);
+        path( m ,"", 0, 0 , ans);
         
         return ans;
         
