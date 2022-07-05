@@ -20,20 +20,36 @@ public:
 */
 
 class Solution {
-public:
-    unordered_map<Node*,Node*> clones;
-    
+public:    
     Node* cloneGraph(Node* node) {
         
         if( node == NULL ){
-            return NULL;
+            return node;
         }
+        unordered_map<Node*,Node*> clones;
         
-        if( clones.count(node) == 0 ){
-            clones[node] = new Node(node->val);
-            for( Node *neighbour : node->neighbors ){
-                clones[node]->neighbors.push_back(cloneGraph(neighbour));
+        queue<Node*> todo;
+        todo.push(node);
+        
+        while( todo.empty() != 1 ){
+            
+            Node *curNode = todo.front();
+            todo.pop();
+            
+            if( clones.count(curNode) == 0 ){
+                clones[curNode] = new Node(curNode->val);
             }
+            
+            for( Node *neighbour : curNode->neighbors ){
+                
+                if( clones.count(neighbour) == 0 ){
+                    clones[neighbour] = new Node(neighbour->val);
+                    todo.push(neighbour);
+                }
+                clones[curNode]->neighbors.push_back(clones[neighbour]);
+                
+            }
+            
         }
         
         return clones[node];
