@@ -10,6 +10,13 @@ using namespace std;
 
 class Solution{
     public:
+    bool isValid( vector<vector<int>> &m , int i , int j ){
+        if( i < 0 || j < 0 || i >= m.size() || j >= m.size() || m[i][j] == 0 ){
+            return false;
+        }
+        return true;
+    }
+    
     void path(vector<vector<int>> &m , string s , int i , int j , vector<string> &ans){
             
         if( i >= m.size() || j >= m[0].size() || i < 0 || j < 0 ){
@@ -27,9 +34,14 @@ class Solution{
         
         m[i][j] = 0;
         
+        
+        if( isValid(m , i-1 , j ) )
         path(m , s + 'U' , i-1 , j , ans);
+        if( isValid(m , i+1 , j ) )
         path(m , s + 'D' , i+1 , j , ans);
+        if( isValid( m , i , j-1) )
         path(m , s + 'L' , i , j-1 , ans);
+        if( isValid( m , i , j+1 ) )
         path(m , s + 'R' , i , j+1 , ans);
         
         m[i][j] = 1;
