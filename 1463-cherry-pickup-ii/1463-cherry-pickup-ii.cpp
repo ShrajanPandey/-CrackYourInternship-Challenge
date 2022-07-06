@@ -11,10 +11,10 @@ public:
     
     }
     
-    int maxCherry( vector<vector<int>> &grid , int x1 , int y1 , int x2 , int y2, vector<vector<vector<vector<int>>>> &memo){
+    int maxCherry( vector<vector<int>> &grid , int x1 , int y1 , int x2 , int y2, vector<vector<vector<int>>> &memo){
          
-        if( memo[x1][y1][x2][y2] != -1 ){
-            return memo[x1][y1][x2][y2];
+        if( memo[x1][y1][y2] != -1 ){
+            return memo[x1][y1][y2];
         }
         
         int cur = 0;
@@ -27,7 +27,7 @@ public:
         }
         
         if( x1 == n-1 && x2 == n-1 ){
-            return memo[x1][y1][x2][y2] = cur;   
+            return memo[x1][y1][y2] = cur;   
         }
 
         
@@ -72,7 +72,7 @@ public:
             
         }
  
-        return memo[x1][y1][x2][y2] = smallAns + cur;
+        return memo[x1][y1][y2] = smallAns + cur;
         
     }
     
@@ -80,7 +80,7 @@ public:
         
         n = grid.size();
         m = grid[0].size();
-        vector<vector<vector<vector<int>>>> memo( n+1 , vector<vector<vector<int>>>( m+1 , vector<vector<int>>(n+1 , vector<int>(m+1 , -1))));
+        vector<vector<vector<int>>> memo( n+1 , vector<vector<int>>( m+1 , vector<int>(m+1 , -1)));
         
         return maxCherry(grid , 0 ,0, 0 , m-1 , memo);
         
