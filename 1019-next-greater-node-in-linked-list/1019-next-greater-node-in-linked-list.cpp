@@ -10,43 +10,28 @@
  */
 class Solution {
 public:
-    stack<int> s;
-    vector<int> ans;
-    
-    void insertCurAns( int val ){
-        
-        int value = 0;
-        while( s.empty() != 1 && s.top() <= val ){
-            s.pop();
-        }
-        
-        if( s.empty() != 1 ){
-            value = s.top();
-        }
-        
-        s.push(val);
-        ans.push_back(value);
-        
-    }
-    
-    void insert( ListNode *head ){
-        
-        if( head == NULL ){
-            return ;
-        }
-        
-        insert( head->next );
-        
-        insertCurAns(head->val);
-        
-    }
     
     vector<int> nextLargerNodes(ListNode* head) {
         
-        ans.clear();
-        insert(head);
-        reverse(ans.begin(),ans.end());
-        return ans;
+        vector<int> res , stk;
+        
+        for( ListNode *curNode = head ; curNode != NULL ; curNode = curNode->next ){
+            
+            while( stk.size() && res[stk.back()] < curNode->val ){
+                res[stk.back()] = curNode->val;
+                stk.pop_back();
+            }
+            
+            stk.push_back(res.size());
+            res.push_back(curNode->val);
+            
+        }
+        
+        for( int i = 0 ; i < stk.size() ; ++i ){
+            res[stk[i]] =0;
+        }
+        
+        return res;
         
     }
 };
