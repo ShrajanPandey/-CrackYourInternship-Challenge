@@ -2,37 +2,22 @@ class Solution {
 public:
     int minNumberOperations(vector<int>& target) {
         
-        stack<int> stk;
+        int top = -1;
         int minSteps = 0;
         
         for( int i = 0; i < target.size() ; ++i ){
             
-            if( stk.size() ){
-                
-                if( stk.top() > target[i] ){
-                    minSteps += stk.top()-target[i];
-                    stk.pop();
-                    stk.push(target[i]);
-                }
-                else{
-                    while( stk.empty() != 1 ){
-                        stk.pop();
-                    }
-                    stk.push(target[i]);
+            if( top != -1 ){   
+                if( top > target[i] ){
+                    minSteps += top-target[i];
                 }
             }
-            else{
-                stk.push(target[i]);
-            }
-                
             
-        }
+            top = target[i];
         
-        while( stk.size() ){
-            minSteps += stk.top();
-            stk.pop();
         }
-        
+     
+        minSteps += top;   
         return minSteps;
         
     }
