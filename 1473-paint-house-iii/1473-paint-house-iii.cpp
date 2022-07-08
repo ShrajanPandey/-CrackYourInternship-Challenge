@@ -21,9 +21,6 @@ public:
         if( houses[i] != 0 ){
             
             int ans = minPaintCost(houses , costs , n , i+1 , target-(pre != houses[i]) , houses[i], memo);    
-            if( pre == -1 ){
-                return ans;
-            }
             return memo[i][pre][target] = ans;
             
         }
@@ -38,18 +35,14 @@ public:
             
         }
         
-        if( pre == -1 ){
-            return ans;
-        }
-        
         return memo[i][pre][target] = ans;
         
     }
     
     int minCost(vector<int>& houses, vector<vector<int>>& cost, int m, int n, int target) {
                 
-        vector<vector<vector<int>>> memo(m+1 , vector<vector<int>>(n+1 , vector<int> (target+1 , -1)));
-        int minPrice = minPaintCost(houses , cost , n , 0 , target , -1, memo);
+        vector<vector<vector<int>>> memo(m , vector<vector<int>>(n+1 , vector<int> (target+1 , -1)));
+        int minPrice = minPaintCost(houses , cost , n , 0 , target , 0, memo);
         
         return (minPrice == INT_MAX ? -1 : minPrice);
         
