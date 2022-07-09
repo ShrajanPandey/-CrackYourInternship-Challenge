@@ -6,20 +6,20 @@ public:
         vector<int> dp( nums.size() , INT_MIN);
         dp[0] = nums[0];
         
-        priority_queue<pair<int,int>> pq;
-        pq.push({dp[0],0});
+        multiset<int> pq;
+        pq.insert(dp[0]);
         
         for( int i = 1 ; i < nums.size() ; ++i ){
                 
-            while( pq.size() && pq.top().second < i-k ){
-                pq.pop();
+            if( i > k ){
+                pq.erase(pq.find(dp[i-k-1]));
             }
-            dp[i] = nums[i] + pq.top().first;
-            pq.push({dp[i],i});
-    
+            dp[i] = *pq.rbegin() + nums[i];
+            pq.insert(dp[i]);
+            
         }
         
-        return dp[nums.size()-1];
+        return dp.back();
         
     }
 };
