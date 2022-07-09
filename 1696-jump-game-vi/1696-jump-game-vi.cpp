@@ -6,16 +6,19 @@ public:
         vector<int> dp( nums.size() , INT_MIN);
         dp[0] = nums[0];
         
-        multiset<int> pq;
-        pq.insert(dp[0]);
+        deque<int> pq;
+        pq.push_back(0);
         
         for( int i = 1 ; i < nums.size() ; ++i ){
                 
-            if( i > k ){
-                pq.erase(pq.find(dp[i-k-1]));
+            if( pq.front() < i-k ){
+                pq.pop_front();
             }
-            dp[i] = *pq.rbegin() + nums[i];
-            pq.insert(dp[i]);
+            dp[i] = nums[i] + dp[pq.front()];
+            while( pq.size() && dp[pq.back()] <= dp[i] ){
+                pq.pop_back();
+            }
+            pq.push_back(i);
             
         }
         
