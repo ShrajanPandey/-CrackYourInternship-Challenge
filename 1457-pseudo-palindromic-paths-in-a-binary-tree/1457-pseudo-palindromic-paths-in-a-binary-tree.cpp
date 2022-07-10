@@ -11,36 +11,22 @@
  */
 class Solution {
 public:
-    int palindromicPaths( TreeNode *root , vector<int> &count ){
+
+    int pseudoPalindromicPaths (TreeNode* root, int count = 0) {
         
         if( root == NULL ){
             return 0;
         }
         
-        count[root->val]++;
+        count ^= 1 << (root->val -1) ;
+        int ans = pseudoPalindromicPaths( root->left , count ) + pseudoPalindromicPaths( root->right , count );
         
-        if( root->left == NULL && root->right == NULL ){
-            int odd = 0;
-            for( int i = 1 ; i < 10 ; ++i ){
-                if( count[i] & 1 ){
-                    ++odd;
-                }
-            }
-            count[root->val]--;
-            return (odd <= 1);
+        if( root->left == root->right && (count & (count-1) ) == 0 ){
+            ans++; 
         }
         
-        int ans = palindromicPaths( root->left , count ) + palindromicPaths( root->right , count);
-        count[root->val]--;
-        
         return ans;
-        
-    }
     
-    int pseudoPalindromicPaths (TreeNode* root) {
-        
-        vector<int> count(10, 0);
-        return palindromicPaths( root , count);
         
     }
 };
