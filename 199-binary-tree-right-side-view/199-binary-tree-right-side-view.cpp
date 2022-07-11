@@ -11,41 +11,25 @@
  */
 class Solution {
 public:
-    vector<int> rightSideView(TreeNode* root) {
+    int maxi = INT_MIN;
+    vector<int> ans;
+    
+    vector<int> rightSideView(TreeNode* root, int h = 0 ) {
         
         if( root == NULL ){
-            return {};
+            return ans;
         }
         
-        vector<int> ans;
-        
-        queue<TreeNode *> pend;
-        pend.push(root);
-        
-        while( pend.size() ){
-            
-            int curLevel = pend.size();
-            while( curLevel-- ){
-                
-                TreeNode *curNode = pend.front();
-                pend.pop();
-                
-                if( curNode->left ){
-                    pend.push(curNode->left);
-                }
-                if( curNode->right ){
-                    pend.push(curNode->right);
-                }
-                
-                if( curLevel == 0 ){
-                    ans.push_back(curNode->val );
-                }
-                
-            }
-            
+        if( maxi < h ){
+            ans.push_back(root->val);
+            maxi = h;
         }
+        
+        rightSideView( root->right , h+1 );
+        rightSideView( root->left , h+1 );
         
         return ans;
+        
         
     }
 };
