@@ -2,7 +2,7 @@ class Solution {
 public:
     string minWindow(string s, string t) {
         
-        map<char,int> count , cur;
+        unordered_map<char,int> count , cur;
         
         for( int i = 0 ;i < t.length() ; ++i ){
             count[t[i]]++;
