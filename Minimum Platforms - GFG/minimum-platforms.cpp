@@ -13,27 +13,27 @@ class Solution{
     int findPlatform(int arr[], int dep[], int n)
     {
     	
-    	int ans = 0;
-    	vector<pair<int,int>> schedule;
+    	sort(arr , arr+n);
+    	sort(dep, dep+n);
     	
-    	for( int i = 0 ; i < n ; ++i ){
-    	    schedule.push_back({arr[i],0});
-    	    schedule.push_back({dep[i],1});
-    	}
+    	int i = 1, j = 0;
+    	int count = 1, ans = 1;
     	
-    	sort(schedule.begin(),schedule.end());
-    	
-    	int count = 0;
-    	for( int i = 0 ; i < schedule.size() ; ++i ){
-    	    if( schedule[i].second == 0 ){
+    	while( i < n && j < n ){
+    	    
+    	    if( arr[i] <= dep[j] ){
     	        ++count;
+    	        ++i;
     	    }
-    	    else{
+    	    else if( dep[j] < arr[i] ){
     	        --count;
+    	        ++j;
     	    }
-    	    ans = max( count , ans );
+
+    	    ans = max( ans , count);
+    	    
     	}
-    
+    	
     	return ans;
     	
     }
