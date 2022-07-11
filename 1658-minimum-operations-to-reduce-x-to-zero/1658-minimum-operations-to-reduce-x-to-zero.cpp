@@ -4,7 +4,7 @@ public:
         
         int ans = INT_MAX;
         
-        map<int,int> pre, suf;
+        unordered_map<int,int> pre, suf;
         int n = nums.size();
         int sum = 0;
         pre[0] = 0;
