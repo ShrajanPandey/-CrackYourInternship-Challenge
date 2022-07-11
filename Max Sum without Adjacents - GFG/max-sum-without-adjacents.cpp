@@ -29,9 +29,22 @@ public:
 	
 	int findMaxSum(int *arr, int n) {
 	    
-	    vector<int> memo( n , - 1);
-	    return maxSum( arr , n , 0 , -2 , memo );
-	    
+        int even = 0 , odd = 0;
+        for( int i = 0 ; i < n ; ++i ){
+            
+            if( i & 1 ){
+                odd += arr[i];
+                odd = odd > even ? odd : even;
+            }
+            else{
+                even += arr[i];
+                even = even > odd ? even : odd;
+            }
+            
+        }
+        
+        return even > odd ? even : odd;
+        
 	}
 };
 
