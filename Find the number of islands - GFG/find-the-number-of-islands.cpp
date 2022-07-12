@@ -5,37 +5,77 @@ using namespace std;
  // } Driver Code Ends
 class Solution {
   public:
-    vector<vector<int>> d{{-1,0},{0,-1},{-1,-1},{1,1},{1,-1},{-1,1},{1,0},{0,1}};
+    int find( vector<int> &parent , int x){
+        if(parent[x] == x ){
+            return x;
+        }
+        return parent[x] = find(parent ,parent[x]);
+    }
     
-    void dfs( vector<vector<char>> &grid , int i , int j ){
+    void Union(vector<int> &parent , vector<int> &rank , int x , int y ){
         
-        if( i < 0 || j < 0 || i >= grid.size() || j >= grid[0].size() || grid[i][j] == '0' ){
+        int pa = find(parent , x);
+        int pb = find(parent , y);
+        
+        if( pa == pb ){
             return;
         }
         
-        
-        grid[i][j] = '0';
-        
-        for( auto x : d ){
-            dfs(grid , i+x[0], j+x[1] );
+        if( rank[pa] > rank[pb] ){
+            rank[pa] += rank[pb];
+            parent[pb] = pa;
+        }
+        else{
+            rank[pb] += rank[pa];
+            parent[pa] = pb;
         }
         
     }
     
     int numIslands(vector<vector<char>>& grid) {
         
-        // vector<vector<int>> visited(grid.size() , vector<int>(grid[0].size(),0));
+        int n = grid.size() , m = grid[0].size();
+        vector<int> parent(n*m,0);
+        vector<int> rank( n*m , 0);
+        
+        for( int i = 0 ;i < n*m ; ++i ){
+            parent[i] = i;
+            rank[i] = 1;
+        }
+        
+        vector<vector<int>> direc = {{1,0},{-1,0},{0,1},{0,-1},{1,1},{-1,1},{1,-1},{-1,-1}};
+        
+        for(int i = 0 ; i < n ; ++i ){
+            for(int j = 0 ; j < m ; ++j ){
+                if( grid[i][j] == '0' ){
+                    continue;
+                }        
+                
+                for( auto cur : direc ){
+                    int x = i + cur[0];
+                    int y = j + cur[1];
+                    
+                    if( x < n && y < m && x >= 0 && y >= 0 && grid[x][y] == '1' ){
+                        Union(parent , rank , i*m+j , x*m+y);
+                    }
+                }        
+            }
+        }
+        
+        vector<int> unique(n*m , 0);
         int ans = 0;
         
-        for( int i = 0 ; i < grid.size() ; ++i ){
-            
-            for( int j = 0 ; j < grid[i].size() ; ++j ){
-                
+        for( int i = 0 ; i < n ; ++i ){
+            for(int j = 0 ; j < m ; ++j ){
                 if( grid[i][j] == '1' ){
-                    dfs( grid, i , j );
-                    ++ans;
+                    // cout << i << " " << j << endl;
+                    int p = find(parent , i*m + j);
+                    // cout << p << " " << i << " " << j << endl;
+                    unique[p]++;
+                    if( unique[p] == 1 ){
+                        ++ans;
+                    }
                 }
-                
             }
         }
         
