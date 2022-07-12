@@ -3,7 +3,7 @@ public:
     string intToRoman(int num) {
         
         string ans;
-        map<int,string> m;
+        unordered_map<int,string> m;
         m[1] = "I";
         m[4] = "IV";
         m[5] = "V";
