@@ -6,26 +6,22 @@ public:
             return "";
         }
         
-        int len = 0;
-        for( int i = 0 ; i < strs.size() ; ++i ){
-            if( i == 0 ){
-                len = strs[i].length();
+        sort(strs.begin(),strs.end());
+        int ans = 0;
+        int i = 0;
+        
+        while( i < min(strs[0].length() ,strs[strs.size()-1].length()) ){
+            
+            if( strs[0][i] != strs[strs.size()-1][i] ){
+                break;
             }
-            else{
-                int j = 0;
-                int k = 0;
-                while( j < strs[i].length() ){
-                    if( strs[i][j] != strs[i-1][j] ){
-                        break;
-                    }
-                    ++j;
-                    ++k;
-                }
-                len = min(len , k);
-            }
+            ++ans;
+            ++i;
+            
         }
         
-        return strs[0].substr(0,len);
+        return strs[0].substr(0,ans);
+        
         
     }
 };
