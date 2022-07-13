@@ -29,7 +29,7 @@ public:
     
     int numWays(int steps, int arrLen) {
         
-        vector<vector<int>> memo(steps+1 , vector<int> ( steps+2 , -1));
+        vector<vector<int>> memo(steps+1 , vector<int> ( steps+1 , -1));
         return countWays( steps , arrLen , 0 , memo );
         
     }
