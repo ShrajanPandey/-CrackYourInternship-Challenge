@@ -29,6 +29,19 @@ public:
         
     }
     
+    bool isSimilar( string &a , string &b ){
+        
+        int c = 0;
+        for( int i = 0 ; i < a.length() ; ++i ){
+            if( a[i] != b[i] && ++c > 2 ){
+                return false;
+            }
+        }
+        
+        return true;
+        
+    }
+    
     int numSimilarGroups(vector<string>& strs) {
         
         int n = strs.size();
@@ -44,23 +57,9 @@ public:
             
             for( int j = i+1 ; j < n ; ++j ){
                 
-                set<char> st;
-                int c = 0;
-                
-                for( int k = 0 ; k < m ; ++k ){
-                    if( strs[i][k] != strs[j][k] ){
-                        st.insert(strs[i][k]);
-                        st.insert(strs[j][k]);
-                        ++c;
-                    }
-                    if( c > 2 ){
-                        break;
-                    }
-                }
-                
-                if( c == 0 || (c == 2 && st.size() == 2) ){
-                    Union(i , j);
-                }
+               if( isSimilar( strs[i] , strs[j] ) ){
+                   Union(i , j);
+               }
                 
             }
             
