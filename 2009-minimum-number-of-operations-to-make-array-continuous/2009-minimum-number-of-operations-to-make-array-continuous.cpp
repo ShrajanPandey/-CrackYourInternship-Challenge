@@ -15,7 +15,6 @@ public:
             p.push_back(s);
         }
         
-        sort(p.begin(),p.end());
         int ans = INT_MAX;
                 
         for( int i = 0 ; i < p.size() ; ++i ){
