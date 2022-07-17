@@ -15,24 +15,26 @@ public:
             p.push_back(s);
         }
         
-        int ans = INT_MAX;
-                
-        for( int i = 0 ; i < p.size() ; ++i ){
+        int ans = 1;
+        int l = 0 ,r = 0;
+        --n;
+        
+        while( r < p.size() ){
             
-            int last = p[i] + n-1;
-            auto op = lower_bound(p.begin()+i,p.end(),last);
-            if( op == p.end() || *op > last ){
-                --op;
+            if( l == r ){
+                ++r;
+            }
+            else if( p[r] - p[l] > n ){
+                ++l;
+            }
+            else{
+                ans = max( ans , r - l + 1 );
+                ++r;
             }
             
-            int size = (op - p.begin())-i+1;
-            int moves = n - size;
-
-            ans = min( ans, moves);
-                
         }
         
-        return ans;
+        return n-ans+1;
         
     }
 };
