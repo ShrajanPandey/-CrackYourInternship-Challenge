@@ -1,6 +1,6 @@
 class MyStack {
 public:
-    queue<int> a,b;
+    queue<int> q;
     int to;
     
     MyStack() {
@@ -8,40 +8,26 @@ public:
     }
     
     void push(int x) {
-        a.push(x);
-        to = x;
+        q.push(x);
+        for( int i = 0; i < q.size()-1 ;++i ){
+            q.push(q.front());
+            q.pop();
+        }
+        
     }
     
     int pop() {
-        while( a.size() != 1 ){
-            b.push(a.front());
-            a.pop();
-        }
-        
-        int ans = a.front();
-        a.pop();
-  
-        int l = 0;
-        while( b.size() != 0 ){
-            if( b.size() == 1 ){
-                to = b.front();
-                l = 1;
-            }
-            a.push(b.front());
-            b.pop();
-        }
-        if( l == 0 ){
-            to = 0;
-        }
+        int ans = q.front();
+        q.pop();
         return ans;
     }
     
     int top() {
-        return to;
+        return q.front();
     }
     
     bool empty() {
-        return a.size() == 0;
+        return q.size() == 0;
     }
 };
 
