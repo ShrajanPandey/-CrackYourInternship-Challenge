@@ -20,33 +20,35 @@ public:
         
     }
     
-    int minCuts( string &s , int start , int end , vector<vector<int>> &memo ){
+    int minCuts( string &s , int start , vector<int> &memo ){
         
-        if( start >= end || isPal( s , start , end ) ){
+        if( start >= s.length()-1 || isPal( s , start , s.length()-1 ) ){
             return 0;
         }
         
-        if( memo[start][end] != -1 ){
-            return memo[start][end];
+        if( memo[start] != -1 ){
+            return memo[start];
         }
         
         int ans = INT_MAX;
-        for( int k = start ; k < end ; ++k ){
+        for( int k = start ; k < s.length()-1 ; ++k ){
+            
             if(isPal(s, start, k)){                         
-                int temp = minCuts(s, k+1, end, memo) + 1;
+                int temp = minCuts(s, k+1,memo) + 1;
                 ans = min (ans, temp);
             }
+            
         }
         
-        return memo[start][end] = ans;
+        return memo[start] = ans;
         
     }
     
     int minCut(string s) {
         
         pal.resize( s.length() , vector<int>(s.length() , -1));
-        vector<vector<int>> memo(s.length(),vector<int> (s.length() , -1));
-        return minCuts( s , 0 , s.length()-1 , memo );
+        vector<int> memo(s.length() , -1);
+        return minCuts( s , 0 , memo );
         
     }
 };
