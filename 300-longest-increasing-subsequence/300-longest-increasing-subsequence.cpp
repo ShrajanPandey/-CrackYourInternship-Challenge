@@ -1,6 +1,6 @@
 class Solution {
 public:
-    int arr[2501][2501];
+    int arr[2502];
     
     int maxLen( vector<int> &nums , int pi , int i){
         
@@ -8,8 +8,8 @@ public:
             return 0;
         }
         
-        if( pi != -1 && arr[i][pi] != -1 ){
-            return arr[i][pi];
+        if( arr[pi+1] != -1 ){
+            return arr[pi+1];
         }
         
         int take = 0 , donttake = maxLen( nums , pi , i+1 );
@@ -17,10 +17,7 @@ public:
             take = 1 + maxLen( nums , i , i+1);
         }
         
-        if( pi == -1 ){
-            return max( take , donttake);
-        }
-        return arr[i][pi] = max( take , donttake);
+        return arr[pi+1] = max( take , donttake);
         
     }
     
