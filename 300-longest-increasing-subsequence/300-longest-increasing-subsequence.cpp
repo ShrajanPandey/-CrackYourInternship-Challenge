@@ -1,30 +1,20 @@
 class Solution {
 public:
-    int arr[2502];
-    
-    int maxLen( vector<int> &nums , int pi , int i){
-        
-        if( i >= nums.size() ){
-            return 0;
-        }
-        
-        if( arr[pi+1] != -1 ){
-            return arr[pi+1];
-        }
-        
-        int take = 0 , donttake = maxLen( nums , pi , i+1 );
-        if( pi == -1 || nums[i] > nums[pi] ){
-            take = 1 + maxLen( nums , i , i+1);
-        }
-        
-        return arr[pi+1] = max( take , donttake);
-        
-    }
     
     int lengthOfLIS(vector<int>& nums) {
         
-        memset(arr , -1 , sizeof(arr));
-        return maxLen(nums ,-1 , 0 );
+        int len = 0;
+        for( int i = 0 ; i < nums.size() ; ++i ){
+            if( i == 0 || nums[len-1] < nums[i] ){
+                nums[len++] = nums[i];
+            }
+            else{
+                auto p = lower_bound(nums.begin(),nums.begin() + len ,nums[i]);
+                *p = nums[i];
+            }
+        }
+        
+        return len;
         
     }
 };
