@@ -1,34 +1,40 @@
 class Solution {
 public:
-
-    int findMaxForm(vector<string>& strs, int m, int n) {
+    int arr[601][101][101];
+    int maxLen( vector<string> &strs , int m , int n , int i ){
         
-        int dp[m+1][n+1];
-        memset(dp,0,sizeof(dp));
-        
-        for( int i = 0 ; i < strs.size() ; ++i ){
-            int ones = 0;
-            int zeros = 0;
-            for( int j = 0 ; j < strs[i].length() ; ++j ){
-                if( strs[i][j] == '0'){
-                    ++zeros;
-                }
-                else{
-                    ++ones;
-                }
-            }
-            
-            for( int j = m ; j >= zeros ; --j ){
-                for( int k = n ; k >= ones ; --k ){
-                    dp[j][k] = max(dp[j][k] , 1 + dp[j-zeros][k-ones]);
-                }
-            }
-            
+        if( i >= strs.size()  ){
+            return 0;
         }
         
-        return dp[m][n];
+        if( arr[i][m][n] != -1 ){
+            return arr[i][m][n];
+        }
+        
+        int z = 0 , o = 0;
+        for( auto e : strs[i] ){
+            if( e == '0' ){
+                ++z;
+            }
+            else{
+                ++o;
+            }
+        }
+        
+        int ans = 0;
+        if( m-z >= 0 && n-o >= 0 ){
+            ans = 1 + maxLen( strs , m-z , n-o , i+1);
+        }
+        
+        ans = max( ans , maxLen( strs , m , n , i+1 ));
+        return arr[i][m][n] = ans;
         
     }
     
- 
+    int findMaxForm(vector<string>& strs, int m, int n) {
+        
+        memset(arr , -1 , sizeof(arr));
+        return maxLen( strs , m , n , 0 );
+        
+    }
 };
