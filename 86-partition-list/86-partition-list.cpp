@@ -11,26 +11,30 @@
 class Solution {
 public:
     ListNode* partition(ListNode* head, int x) {
-        //Creating New Node With Some value saves us from a lot of edge work cases handling :)
-        ListNode *node1 = new ListNode(-1), *node2 = new ListNode(-1);
-        ListNode *less = node1 , *more = node2;
+        
+        ListNode *dless = new ListNode(0) , *dmore = new ListNode(0);
+        ListNode *tail1 = dless , *tail2 = dmore;
         
         ListNode *temp = head;
-        while( temp ){
-            if( temp->val < x ){
-                less->next = temp;
-                less = temp;
+        while( temp != NULL ){
+            
+            if( temp->val >= x ){
+                tail2->next = temp;
+                tail2 = temp;
             }
             else{
-                more->next = temp;
-                more = temp;
+                tail1->next = temp;
+                tail1 = temp;
             }
+            
             temp = temp->next;
+            
         }
         
-        more->next = NULL;
-        less->next = node2->next;
-        return node1->next;
+        tail1->next = dmore->next;
+        tail2->next = NULL;
+        
+        return dless->next;
         
     }
 };
