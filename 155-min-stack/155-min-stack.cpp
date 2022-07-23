@@ -1,29 +1,44 @@
+class Node{
+    public:
+    int val;
+    int minVal;
+    Node *next;
+    
+    Node(int v , int m , Node *n ){
+        val = v;
+        minVal = m;
+        next = n;
+    }
+};
+
 class MinStack {
 public:
-    vector<int> st;
-    multiset<int> m;
+    
+    Node *head;
     
     MinStack() {
-        
+        head = NULL;
     }
     
     void push(int val) {
-        st.push_back(val);
-        m.insert(val);
+        if(head == NULL ){
+            head = new Node(val , val , NULL);
+        }
+        else{
+            head = new Node(val , min( val , head->minVal) , head );
+        }
     }
     
     void pop() {
-        int x = st.back();
-        m.erase(m.find(x));
-        st.pop_back();
+        head = head->next;
     }
     
     int top() {
-        return st.back();
+        return head->val;
     }
     
     int getMin() {
-        return *m.begin();
+        return head->minVal;
     }
 };
 
