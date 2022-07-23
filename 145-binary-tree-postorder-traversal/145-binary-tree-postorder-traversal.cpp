@@ -19,31 +19,24 @@ public:
         
         vector<int> ans;
         stack<TreeNode *> helper;
-        TreeNode *cur = root, *last = NULL ;
+        helper.push(root);
         
-        while( cur || helper.size() ){
+        while( helper.size() ){
+        
+            TreeNode *cur = helper.top();
+            helper.pop();
             
-            if( cur != NULL ){
-                helper.push(cur);
-                cur = cur->left;
+            ans.push_back(cur->val);
+            if( cur->left ){
+                helper.push(cur->left);
             }
-            else{
-                
-                TreeNode *node = helper.top();
-                if( node->right != NULL && node->right != last ){
-                    cur = node->right;
-                }
-                else{
-                    ans.push_back(node->val);
-                    last = node;
-                    helper.pop();
-                }
-                
+            if( cur->right ){
+                helper.push(cur->right);
             }
             
         }
         
-        
+        reverse(ans.begin(),ans.end());
         return ans;
         
     }
