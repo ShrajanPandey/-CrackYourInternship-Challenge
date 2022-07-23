@@ -17,19 +17,10 @@ public:
             return 0;
         }
         
-        int left = maxPath(root->left , ans);
-        int right = maxPath(root->right, ans);
+        int left = max( 0 , maxPath(root->left , ans));
+        int right = max( 0 , maxPath(root->right, ans));
         
-        if(left < 0 ){
-            left = 0;
-        }
-        if( right < 0 ){
-            right = 0;
-        }
-        
-        int an = max(ans , root->val + left + right);
-        ans = max( ans , an); 
-        
+        ans = max(ans , root->val + left + right);       
         return root->val + max( left , right);
         
     }
