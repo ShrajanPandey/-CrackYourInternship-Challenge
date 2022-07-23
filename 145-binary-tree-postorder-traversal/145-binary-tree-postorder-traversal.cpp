@@ -17,30 +17,34 @@ public:
             return {};
         }
         
-        stack<TreeNode *> st1 , st2;
-        st1.push(root);
-        
-        while( st1.empty() != 1 ){
-            
-            TreeNode *cur = st1.top();
-            st1.pop();
-            
-            st2.push(cur);
-            if( cur->left ){
-                st1.push(cur->left);
-            }
-            if( cur->right ){
-                st1.push(cur->right);
-            }
-            
-        }
-        
         vector<int> ans;
-        while( st2.empty() != 1 ){
-            ans.push_back(st2.top()->val);
-            st2.pop();
+        stack<TreeNode *> helper;
+        TreeNode *cur = root, *last = NULL ;
+        
+        while( cur || helper.size() ){
+            
+            if( cur != NULL ){
+                helper.push(cur);
+                cur = cur->left;
+            }
+            else{
+                
+                TreeNode *node = helper.top();
+                if( node->right != NULL && node->right != last ){
+                    cur = node->right;
+                }
+                else{
+                    ans.push_back(node->val);
+                    last = node;
+                    helper.pop();
+                }
+                
+            }
+            
         }
+        
         
         return ans;
+        
     }
 };
