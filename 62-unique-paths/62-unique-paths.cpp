@@ -2,7 +2,8 @@ class Solution {
 public:
     
     //TC - O(m*n)
-    //SC - O()
+    //SC - O(C)
+    
     int dp[101][101];
     int solve( int m , int n ){
         
@@ -24,7 +25,7 @@ public:
     int uniquePaths(int m, int n) {
         
         memset(dp,-1,sizeof(dp));
-       return solve(m , n);
+        return solve(m , n);
         
     }
     
