@@ -2,59 +2,33 @@ class Solution {
 public:
     string minWindow(string s, string t) {
         
-        unordered_map<char,int> count , cur;
-        
-        for( int i = 0 ;i < t.length() ; ++i ){
-            count[t[i]]++;
-        }
-        
-        int start = 0 , end = 0;
-        int ans = INT_MAX , equalChars = 0, fstart = -1;
-        
-        while( end < s.length() ){
-            
-            if( count.count(s[end]) ){
-                cur[s[end]]++;
-                if( cur[s[end]] <= count[s[end]] ){
-                    ++equalChars;
-                }
-            }
-            
-            if( equalChars == t.length() ){
-                
-                while( start < end ){
-                    
-                    if( count.count(s[start]) ){
-                        if( cur[s[start]] == count[s[start]] ){
-                            break;
-                        }
-                        --cur[s[start]];
+        unordered_map<char,int> m;
+            for(auto c:t)
+                m[c]++;
+
+            int start=0,end=0,count=t.size(),head=0,mini=INT_MAX;
+
+            while(end<s.size()){
+
+                if(m[s[end]]>0) 
+                    count--;
+
+                m[s[end]]--;
+                end++;
+
+                while(count==0){
+                    if(end-start<mini){
+                        head=start;
+                        mini=end-start;
                     }
-                    ++start;
-                    
+                    m[s[start]]++;
+                    if(m[s[start]]>0) count++;
+                    start++;
                 }
-                
-                if( ans > end-start+1 ){
-                    fstart = start;
-                }
-                ans = min( ans , end - start + 1 );
-                
-                while( start < end && equalChars == t.length() ){
-                    if( count.count(s[start]) ){
-                        if( cur[s[start]] == count[s[start]] ){
-                            --cur[s[start]];
-                            --equalChars;
-                        }
-                    }
-                    ++start;
-                }
-                
+
             }
-            
-            ++end;
-        }
-        
-        return (fstart == -1 ? "" : s.substr(fstart,ans));
+
+            return mini == INT_MAX ? "" : s.substr(head,mini);
         
     }
 };
