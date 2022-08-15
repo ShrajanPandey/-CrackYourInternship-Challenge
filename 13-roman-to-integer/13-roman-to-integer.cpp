@@ -11,8 +11,8 @@ public:
         m['D'] = 500;
         m['M'] = 1000;
         
-        int ans = 0;
-        for(int i = 0 ; i < s.length() ; ++i ){
+        int ans = m[s[s.length()-1]];
+        for(int i = s.length()-2 ; i >= 0 ; --i ){
             
             if( m[s[i+1]] > m[s[i]] ){
                 ans -= m[s[i]];
